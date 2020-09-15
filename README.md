@@ -1,4 +1,4 @@
-#Alternative Movie Database
+# Alternative Movie Database
 
 This application is the core to an alternative movie database service. 
 It provides a GraphQL API to interact with in order to access movie information
