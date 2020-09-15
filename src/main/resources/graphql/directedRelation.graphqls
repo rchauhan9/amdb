@@ -1,0 +1,5 @@
+type DirectedRelation {
+    id: Int!
+    person: Person!
+    title: Title!
+}

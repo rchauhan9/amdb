@@ -1,0 +1,16 @@
+type Mutation {
+    createTitle(name: String, summary: String, released: Int, certificateRating: String, titleLengthInMins: Int, storyline: String, tagline: String): Title
+    createPerson(name: String, dateOfBirth: String): Person
+    createGenre(name: String): Genre
+    createAward(name: String): Award
+    createAwardOrganisation(name: String, yearEstablishedIn: Int): AwardOrganisation
+
+    createActedInRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int, characters: [String], billing: Int): ActedInRelation
+    createDirectedRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int): DirectedRelation
+    createWroteRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int, items: [String]): WroteRelation
+    createProducedRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int): ProducedRelation
+    createGenreRelation(titleName: String, titleReleased: Int, genreName: String): GenreRelation
+    createNominatedRelation(personName: String, personDOB: String, awardName: String, titleID: String, nominationYear: Int): NominatedRelation
+    createWonRelation(personName: String, personDOB: String, awardName: String, titleID: String, wonYear: Int): WonRelation
+    createAwardsRelation(awardOrganisationName: String, awardName: String): AwardsRelation
+}

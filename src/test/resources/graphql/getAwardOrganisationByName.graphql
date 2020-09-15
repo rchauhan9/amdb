@@ -1,0 +1,6 @@
+query {
+   awardOrganisationByName(name: "Academy Awards") {
+     name
+     yearEstablishedIn
+   }
+ }

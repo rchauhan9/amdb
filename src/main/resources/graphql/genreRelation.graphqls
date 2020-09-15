@@ -1,0 +1,5 @@
+type GenreRelation {
+    id: Int!
+    title: Title!
+    genre: Genre!
+}

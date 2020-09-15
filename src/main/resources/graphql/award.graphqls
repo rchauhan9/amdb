@@ -1,0 +1,5 @@
+type Award {
+    id: ID!
+    name: String!
+    awardedBy: AwardsRelation
+}

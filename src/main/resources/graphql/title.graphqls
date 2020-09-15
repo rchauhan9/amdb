@@ -1,0 +1,14 @@
+type Title {
+    id: ID!
+    name: String!
+    summary: String
+    released: Int
+    certificateRating: String
+    titleLengthInMins: Int
+    storyline: String
+    tagline: String
+    genres: [GenreRelation]
+    cast: [ActedInRelation]
+    directors: [DirectedRelation]
+    writers: [WroteRelation]
+}

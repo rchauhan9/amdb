@@ -1,0 +1,11 @@
+query {
+  titleByNameAndReleased(name:"The Dark Knight", released:2008) {
+    name
+    summary
+    released
+    certificateRating
+    titleLengthInMins
+    storyline
+    tagline
+  }
+}

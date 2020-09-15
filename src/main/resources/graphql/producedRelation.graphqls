@@ -1,0 +1,5 @@
+type ProducedRelation {
+    id: Int!
+    person: Person!
+    title: Title!
+}

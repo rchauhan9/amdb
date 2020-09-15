@@ -1,0 +1,7 @@
+type ActedInRelation {
+    id: Int!
+    characters: [String]!
+    billing: Int!
+    person: Person!
+    title: Title!
+}

@@ -1,0 +1,6 @@
+type WroteRelation {
+    id: Int!
+    items: [String]!
+    person: Person!
+    title: Title!
+}

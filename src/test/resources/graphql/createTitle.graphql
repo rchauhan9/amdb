@@ -1,0 +1,19 @@
+mutation {
+  createTitle(
+    name:"The Dark Knight",
+    summary:"Batman fights Joker."
+    released:2008,
+    certificateRating:"12A",
+    titleLengthInMins:154,
+    storyline:"The second title in Nolan's epic Dark Knight trilogy."
+    tagline:"Why so serious?"
+  ) {
+    name
+    summary
+    released
+    certificateRating
+    titleLengthInMins
+    storyline
+    tagline
+  }
+}

@@ -1,0 +1,5 @@
+query {
+   genreByName(name: "Thriller") {
+     name
+   }
+ }

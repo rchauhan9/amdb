@@ -1,0 +1,11 @@
+query {
+   title(id: "d9436d98-4585-4661-9cf8-a4857332043a") {
+     name
+     summary
+     released
+     certificateRating
+     titleLengthInMins
+     storyline
+     tagline
+   }
+ }

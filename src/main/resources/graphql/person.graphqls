@@ -1,0 +1,7 @@
+type Person {
+    id: ID!
+    name: String!
+    dateOfBirth: String
+    actedIn: [ActedInRelation]
+    directed: [DirectedRelation]
+}

@@ -1,0 +1,12 @@
+mutation {
+  createActedInRelation(personName:"Christian Bale", personDOB:"30-Jan-1974", titleName:"The Dark Knight", titleReleased:2008, characters: ["Bruce Wayne", "Batman"], billing:0) {
+    billing
+    characters
+    person {
+      name
+    }
+    title {
+      name
+    }
+  }
+}

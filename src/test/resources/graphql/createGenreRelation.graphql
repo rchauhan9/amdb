@@ -1,0 +1,12 @@
+mutation {
+  createGenreRelation(titleName: "The Dark Knight", titleReleased: 2008, genreName: "Thriller") {
+    title {
+      name
+      released
+      titleLengthInMins
+    }
+    genre {
+      name
+    }
+  }
+}

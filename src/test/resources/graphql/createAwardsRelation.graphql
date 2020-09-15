@@ -1,0 +1,11 @@
+mutation {
+  createAwardsRelation(awardOrganisationName: "Academy Awards", awardName: "Best Performance by an Actor in a Leading Role") {
+    awardOrganisation {
+        name
+        yearEstablishedIn
+    }
+    award {
+        name
+    }
+  }
+}
