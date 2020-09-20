@@ -25,13 +25,13 @@ public class NominatedRelationService {
     @Autowired
     AwardService awardService;
 
-    public NominatedRelation createNominatedRelation(String personName, String personDOB, String awardName, String titleID, Integer nominationYear) {
+    public NominatedRelation createNominatedRelation(String personName, String personDOB, String awardName, String awardOrganisation, String titleID, Integer nominationYear) {
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {
             throw new PersonDoesNotExistException(String.format("Cannot create NOMINATED relation between Person %s and Award %s. Person does not exist.", personName, awardName));
         }
 
-        Optional<Award> award = awardService.getAwardByName(awardName);
+        Optional<Award> award = awardService.getAwardByNameAndOrganisation(awardName, awardOrganisation);
         if (award.isEmpty()) {
             throw new AwardDoesNotExistException(
                     String.format("Cannot create NOMINATED relation between Person %s and Award %s. Award does not exist.",

@@ -1,6 +1,6 @@
 package com.rchauhan.amdb.model;
 
-import com.rchauhan.amdb.constants.Neo4jConstants;
+import com.rchauhan.amdb.utils.Constants;
 import org.neo4j.ogm.annotation.GeneratedValue;
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -24,7 +24,7 @@ public class Person {
 
     private String name;
 
-    @DateString(Neo4jConstants.PERSON_DOB_FORMAT)
+    @DateString(Constants.PERSON_DOB_FORMAT)
     private Date dateOfBirth;
 
     @Relationship(type = "ACTED_IN")
@@ -116,7 +116,7 @@ public class Person {
     }
 
     public static Person createPerson(String name, String dOB) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat(Constants.PERSON_DOB_FORMAT);
         Date dateOfBirth = new Date();
         try {
             dateOfBirth = sdf.parse(dOB);

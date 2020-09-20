@@ -3,6 +3,7 @@ mutation {
   personName:"Christian Bale",
   personDOB:"30-Jan-1974",
   awardName:"Best Performance by an Actor in a Supporting Role",
+  awardOrganisation: "Academy Awards",
   titleID:"5516e648-ecb5-4b08-97e0-1615ce4e111a",
   wonYear:2011) {
     person {

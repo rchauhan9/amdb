@@ -1,0 +1,6 @@
+query {
+   awardByNameAndOrganisation(name: "Best Performance by an Actor in a Leading Role", organisation: "Academy Awards") {
+     name
+     organisation
+   }
+ }

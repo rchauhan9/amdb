@@ -1,7 +1,6 @@
 package com.rchauhan.amdb.services;
 
 import com.rchauhan.amdb.exceptions.AwardDoesNotExistException;
-import com.rchauhan.amdb.exceptions.NominatedRelationExistsException;
 import com.rchauhan.amdb.exceptions.PersonDoesNotExistException;
 import com.rchauhan.amdb.exceptions.WonRelationExistsException;
 import com.rchauhan.amdb.model.Award;
@@ -27,14 +26,14 @@ public class WonRelationService {
     AwardService awardService;
 
 
-    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String titleID, Integer wonYear) {
+    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String awardOrganisation, String titleID, Integer wonYear) {
 
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {
             throw new PersonDoesNotExistException(String.format("Cannot create WON relation between Person %s and Award %s. Person does not exist.", personName, awardName));
         }
 
-        Optional<Award> award = awardService.getAwardByName(awardName);
+        Optional<Award> award = awardService.getAwardByNameAndOrganisation(awardName, awardOrganisation);
         if (award.isEmpty()) {
             throw new AwardDoesNotExistException(
                     String.format("Cannot create WON relation between Person %s and Award %s. Award does not exist.",

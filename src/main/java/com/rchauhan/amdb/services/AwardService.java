@@ -20,19 +20,19 @@ public class AwardService {
         return awardRepository.findById(id);
     }
 
-    public Optional<Award> getAwardByName(String name) {
-        return awardRepository.findByName(name);
+    public Optional<Award> getAwardByNameAndOrganisation(String name, String organisation) {
+        return awardRepository.findByNameAndOrganisation(name, organisation);
     }
 
-    public Award createAward(String name) {
-        if (awardExists(name)) {
-            throw new AwardExistsException(String.format("Award with name %s already exists.", name));
+    public Award createAward(String name, String organisation) {
+        if (awardExists(name, organisation)) {
+            throw new AwardExistsException(String.format("Award with name %s from organisation %s already exists.", name, organisation));
         }
-        Award award = new Award(name);
+        Award award = new Award(name, organisation);
         return awardRepository.save(award);
     }
 
-    private boolean awardExists(String name) {
-        return awardRepository.findByName(name).isPresent();
+    private boolean awardExists(String name, String organisation) {
+        return awardRepository.findByNameAndOrganisation(name, organisation).isPresent();
     }
 }

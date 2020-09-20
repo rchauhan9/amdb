@@ -1,5 +1,0 @@
-query {
-   awardByName(name: "Best Performance by an Actor in a Leading Role") {
-     name
-   }
- }

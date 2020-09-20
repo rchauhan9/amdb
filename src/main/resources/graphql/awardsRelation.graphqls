@@ -1,5 +1,0 @@
-type AwardsRelation {
-    id: Int!
-    awardOrganisation: AwardOrganisation!
-    award: Award!
-}

@@ -1,5 +1,6 @@
 mutation {
-  createAward(name:"Best Performance by an Actor in a Leading Role") {
+  createAward(name:"Best Performance by an Actor in a Leading Role", organisation: "Academy Awards") {
     name
+    organisation
   }
 }

@@ -11,8 +11,5 @@ import java.util.UUID;
 @Repository
 public interface AwardRepository extends Neo4jRepository<Award, UUID> {
 
-//    @Query("MATCH (a:Award {name: $name}) RETURN (a)")
-//    Optional<Object> getAwardByName(String name);
-
-    Optional<Award> findByName(String name);
+    Optional<Award> findByNameAndOrganisation(String name, String organisation);
 }

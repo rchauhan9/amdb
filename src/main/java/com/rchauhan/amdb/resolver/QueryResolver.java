@@ -13,9 +13,6 @@ import java.util.UUID;
 public class QueryResolver implements GraphQLQueryResolver {
 
     @Autowired
-    AwardOrganisationService awardOrganisationService;
-
-    @Autowired
     AwardService awardService;
 
     @Autowired
@@ -27,20 +24,12 @@ public class QueryResolver implements GraphQLQueryResolver {
     @Autowired
     TitleService titleService;
 
-    public Optional<AwardOrganisation> getAwardOrganisation(UUID id) {
-        return awardOrganisationService.getAwardOrganisation(id);
-    }
-
-    public Optional<AwardOrganisation> getAwardOrganisationByName(String name) {
-        return awardOrganisationService.getAwardOrganisationByName(name);
-    }
-
     public Optional<Award> getAward(UUID id) {
         return awardService.getAward(id);
     }
 
-    public Optional<Award> getAwardByName(String name) {
-        return awardService.getAwardByName(name);
+    public Optional<Award> getAwardByNameAndOrganisation(String name, String organisation) {
+        return awardService.getAwardByNameAndOrganisation(name, organisation);
     }
 
     public Optional<Genre> getGenre(UUID id) {

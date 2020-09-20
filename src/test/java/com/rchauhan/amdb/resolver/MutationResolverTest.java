@@ -33,12 +33,6 @@ public class MutationResolverTest {
     AwardService awardService;
 
     @MockBean
-    AwardOrganisationService awardOrganisationService;
-
-    @MockBean
-    AwardsRelationService awardsRelationService;
-
-    @MockBean
     DirectedRelationService directedRelationService;
 
     @MockBean
@@ -90,19 +84,13 @@ public class MutationResolverTest {
     private ActedInRelation actedInRelation = new ActedInRelation(characters, billing, christianBale, darkKnight);
 
     /* AWARD VARS */
+    private String awardOrganisation = "Academy Awards";
+
     private String awardLeadingRole = "Best Performance by an Actor in a Leading Role";
-    private Award awardLead = new Award(awardLeadingRole);
+    private Award awardLead = new Award(awardLeadingRole, awardOrganisation);
 
     private String awardSupportingRole = "Best Performance by an Actor in a Supporting Role";
-    private Award awardSupp = new Award(awardSupportingRole);
-
-    /* AWARD ORGANISATION VARS */
-    private Integer yearEstablished = 1929;
-    private String awardOrganisationName = "Academy Awards";
-    private AwardOrganisation awardOrganisation = new AwardOrganisation(awardOrganisationName, yearEstablished);
-
-    /* AWARDS RELATION VARS */
-    private AwardsRelation awardsRelation = new AwardsRelation(awardOrganisation, awardLead);
+    private Award awardSupp = new Award(awardSupportingRole, awardOrganisation);
 
     /* DIRECTED RELATION VARS */
     private DirectedRelation directedRelation = new DirectedRelation(chrisNolan, darkKnight);
@@ -145,30 +133,11 @@ public class MutationResolverTest {
 
     @Test
     public void createAwardTest() throws IOException {
-        when(awardService.createAward(awardLeadingRole)).thenReturn(awardLead);
+        when(awardService.createAward(awardLeadingRole, awardOrganisation)).thenReturn(awardLead);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createAward.graphql");
         assertTrue(response.isOk());
         assertEquals(awardLead.getName(), response.get("$.data.createAward.name", String.class));
-    }
-
-    @Test
-    public void createAwardOrganisationTest() throws IOException {
-        when(awardOrganisationService.createAwardOrganisation(awardOrganisationName, yearEstablished)).thenReturn(awardOrganisation);
-        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createAwardOrganisation.graphql");
-        assertTrue(response.isOk());
-        assertEquals(awardOrganisation.getName(), response.get("$.data.createAwardOrganisation.name", String.class));
-        assertEquals(awardOrganisation.getYearEstablishedIn(), response.get("$.data.createAwardOrganisation.yearEstablishedIn", Integer.class));
-    }
-
-    @Test
-    public void createAwardsRelationTest() throws IOException {
-        when(awardsRelationService.createAwardsRelation(awardOrganisationName, awardLeadingRole)).thenReturn(awardsRelation);
-        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createAwardsRelation.graphql");
-        assertTrue(response.isOk());
-        assertEquals(awardsRelation.getAward().getName(), response.get("$.data.createAwardsRelation.award.name", String.class));
-        assertEquals(awardsRelation.getAwardOrganisation().getName(), response.get("$.data.createAwardsRelation.awardOrganisation.name", String.class));
-        assertEquals(awardsRelation.getAwardOrganisation().getYearEstablishedIn(),
-                response.get("$.data.createAwardsRelation.awardOrganisation.yearEstablishedIn", Integer.class));
+        assertEquals(awardLead.getOrganisation(), response.get("$.data.createAward.organisation", String.class));
     }
 
     @Test
@@ -205,7 +174,7 @@ public class MutationResolverTest {
 
     @Test
     public void createNominatedRelationTest() throws IOException {
-        when(nominatedRelationService.createNominatedRelation(nameBale, dOBBale, awardLeadingRole, titleIDNom, nominationYear))
+        when(nominatedRelationService.createNominatedRelation(nameBale, dOBBale, awardLeadingRole, awardOrganisation, titleIDNom, nominationYear))
                 .thenReturn(nominatedRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createNominatedRelation.graphql");
         assertTrue(response.isOk());
@@ -253,7 +222,7 @@ public class MutationResolverTest {
 
     @Test
     public void createWonRelationTest() throws IOException {
-        when(wonRelationService.createWonRelation(nameBale, dOBBale, awardSupportingRole, titleIDWon, wonYear))
+        when(wonRelationService.createWonRelation(nameBale, dOBBale, awardSupportingRole, awardOrganisation, titleIDWon, wonYear))
                 .thenReturn(wonRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createWonRelation.graphql");
         assertTrue(response.isOk());
@@ -273,16 +242,5 @@ public class MutationResolverTest {
         assertEquals(wroteRelation.getTitle().getName(), response.get("$.data.createWroteRelation.title.name", String.class));
         assertEquals(wroteRelation.getItems(), response.get("$.data.createWroteRelation.items", ArrayList.class));
     }
-
-//    private Person createPerson(String name, String dOB) {
-//        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
-//        Date dateOfBirth = new Date();
-//        try {
-//            dateOfBirth = sdf.parse(dOB);
-//        } catch (ParseException e) {
-//            System.out.println("Could not parse date of birth");
-//        }
-//        return new Person(name, dateOfBirth);
-//    }
 
 }

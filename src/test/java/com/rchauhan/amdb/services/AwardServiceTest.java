@@ -28,6 +28,7 @@ public class AwardServiceTest {
 
     private UUID awardID = UUID.randomUUID();
     private String awardName = "Best Performance by an Actor in a Leading Role";
+    private String awardOrganisation = "Academy Awards";
 
     @Test
     public void getAwardByIDTest() {
@@ -36,30 +37,30 @@ public class AwardServiceTest {
     }
 
     @Test
-    public void getAwardByNameTest() {
-        awardService.getAwardByName(awardName);
-        verify(awardRepository).findByName(awardName);
+    public void getAwardByNameAndOrganisationTest() {
+        awardService.getAwardByNameAndOrganisation(awardName, awardOrganisation);
+        verify(awardRepository).findByNameAndOrganisation(awardName, awardOrganisation);
     }
 
     @Test
     public void createAwardWhenAwardExistsTest() {
-        Award award = new Award(awardName);
-        when(awardRepository.findByName(awardName)).thenReturn(Optional.of(award));
+        Award award = new Award(awardName, awardOrganisation);
+        when(awardRepository.findByNameAndOrganisation(awardName, awardOrganisation)).thenReturn(Optional.of(award));
 
         Exception exception = assertThrows(AwardExistsException.class, () -> {
-            awardService.createAward(awardName);
+            awardService.createAward(awardName, awardOrganisation);
         });
 
-        String expectedMessage = "Award with name Best Performance by an Actor in a Leading Role already exists.";
+        String expectedMessage = "Award with name Best Performance by an Actor in a Leading Role from organisation Academy Awards already exists.";
         assertEquals(expectedMessage, exception.getMessage());
     }
 
     @Test
     public void createAwardWhenDoesNotExist() {
-        Award bestPerformance = new Award(awardName);
-        when(awardRepository.findByName(awardName)).thenReturn(Optional.empty());
+        Award bestPerformance = new Award(awardName, awardOrganisation);
+        when(awardRepository.findByNameAndOrganisation(awardName, awardOrganisation)).thenReturn(Optional.empty());
         when(awardRepository.save(bestPerformance)).thenReturn(bestPerformance);
-        Award award = awardService.createAward(awardName);
+        Award award = awardService.createAward(awardName, awardOrganisation);
         assertEquals(awardName, award.getName());
     }
 }

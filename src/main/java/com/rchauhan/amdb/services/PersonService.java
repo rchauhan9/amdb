@@ -1,6 +1,6 @@
 package com.rchauhan.amdb.services;
 
-import com.rchauhan.amdb.constants.Neo4jConstants;
+import com.rchauhan.amdb.utils.Constants;
 import com.rchauhan.amdb.exceptions.PersonExistsException;
 import com.rchauhan.amdb.model.Person;
 import com.rchauhan.amdb.repositories.PersonRepository;
@@ -28,7 +28,7 @@ public class PersonService {
     }
 
     public Person createPerson(String name, Date dateOfBirth) throws PersonExistsException {
-        SimpleDateFormat formatter = new SimpleDateFormat(Neo4jConstants.PERSON_DOB_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(Constants.PERSON_DOB_FORMAT);
         if (personExists(name, formatter.format(dateOfBirth))) {
             throw new PersonExistsException(String.format("A person with name %s and date of birth %s already exists.", name, formatter.format(dateOfBirth)));
         }

@@ -1,6 +1,0 @@
-type AwardOrganisation {
-    id: ID!
-    name: String!
-    yearEstablishedIn: Int
-    awards: [AwardsRelation]
-}

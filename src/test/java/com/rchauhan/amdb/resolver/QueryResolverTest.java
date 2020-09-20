@@ -32,12 +32,6 @@ public class QueryResolverTest {
     AwardService awardService;
 
     @MockBean
-    AwardOrganisationService awardOrganisationService;
-
-    @MockBean
-    AwardsRelationService awardsRelationService;
-
-    @MockBean
     DirectedRelationService directedRelationService;
 
     @MockBean
@@ -68,12 +62,8 @@ public class QueryResolverTest {
 
     /* AWARD VARS */
     private String awardLeadingRole = "Best Performance by an Actor in a Leading Role";
-    private Award awardLead = new Award(awardLeadingRole);
-
-    /* AWARD ORGANISATION VARS */
-    private Integer yearEstablished = 1929;
-    private String awardOrganisationName = "Academy Awards";
-    private AwardOrganisation awardOrganisation = new AwardOrganisation(awardOrganisationName, yearEstablished);
+    private String awardOrganisation = "Academy Awards";
+    private Award awardLead = new Award(awardLeadingRole, awardOrganisation);
 
     /* GENRE VARS */
     private String genreName = "Thriller";
@@ -103,29 +93,12 @@ public class QueryResolverTest {
     }
 
     @Test
-    public void getAwardByNameTest() throws IOException {
-        when(awardService.getAwardByName(awardLeadingRole)).thenReturn(Optional.of(awardLead));
-        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getAwardByName.graphql");
+    public void getAwardByNameAndOrganisationTest() throws IOException {
+        when(awardService.getAwardByNameAndOrganisation(awardLeadingRole, awardOrganisation)).thenReturn(Optional.of(awardLead));
+        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getAwardByNameAndOrganisation.graphql");
         assert(response.isOk());
-        assertEquals(awardLead.getName(), response.get("$.data.awardByName.name", String.class));
-    }
-
-    @Test
-    public void getAwardOrganisationByIDTest() throws IOException {
-        when(awardOrganisationService.getAwardOrganisation(mockUUID)).thenReturn(Optional.of(awardOrganisation));
-        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getAwardOrganisation.graphql");
-        assert(response.isOk());
-        assertEquals(awardOrganisation.getName(), response.get("$.data.awardOrganisation.name", String.class));
-        assertEquals(awardOrganisation.getYearEstablishedIn(), response.get("$.data.awardOrganisation.yearEstablishedIn", Integer.class));
-    }
-
-    @Test
-    public void getAwardOrganisationByNameTest() throws IOException {
-        when(awardOrganisationService.getAwardOrganisationByName(awardOrganisationName)).thenReturn(Optional.of(awardOrganisation));
-        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getAwardOrganisationByName.graphql");
-        assert(response.isOk());
-        assertEquals(awardOrganisation.getName(), response.get("$.data.awardOrganisationByName.name", String.class));
-        assertEquals(awardOrganisation.getYearEstablishedIn(), response.get("$.data.awardOrganisationByName.yearEstablishedIn", Integer.class));
+        assertEquals(awardLead.getName(), response.get("$.data.awardByNameAndOrganisation.name", String.class));
+        assertEquals(awardLead.getOrganisation(), response.get("$.data.awardByNameAndOrganisation.organisation", String.class));
     }
 
     @Test

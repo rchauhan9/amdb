@@ -22,14 +22,14 @@ public class Award {
 
     private String name;
 
+    private String organisation;
+
     @Relationship(type = "NOMINATED", direction = Relationship.INCOMING)
     private List<NominatedRelation> nominations;
 
     @Relationship(type = "WON", direction = Relationship.INCOMING)
     private List<NominatedRelation> wins;
 
-    @Relationship(type = "AWARDS", direction = Relationship.INCOMING)
-    private AwardsRelation awardedBy;
 
     public Award() {
     }
@@ -38,8 +38,9 @@ public class Award {
         this.id = id;
     }
 
-    public Award(String name) {
+    public Award(String name, String organisation) {
         this.name = name;
+        this.organisation = organisation;
     }
 
     public UUID getId() {
@@ -50,16 +51,16 @@ public class Award {
         return name;
     }
 
+    public String getOrganisation() {
+        return organisation;
+    }
+
     public List<NominatedRelation> getNominations() {
         return nominations;
     }
 
     public List<NominatedRelation> getWins() {
         return wins;
-    }
-
-    public AwardsRelation getAwardedBy() {
-        return awardedBy;
     }
 
     @Override
