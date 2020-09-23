@@ -5,6 +5,7 @@ import com.graphql.spring.boot.test.GraphQLTest;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import com.rchauhan.amdb.model.*;
 import com.rchauhan.amdb.services.*;
+import com.rchauhan.amdb.utils.URLGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -25,6 +24,9 @@ public class MutationResolverTest {
 
     @Autowired
     private GraphQLTestTemplate graphQLTestTemplate;
+
+    @MockBean
+    URLGenerator urlGenerator;
 
     @MockBean
     ActedInRelationService actedInRelationService;
@@ -59,14 +61,16 @@ public class MutationResolverTest {
     @MockBean
     WroteRelationService wroteRelationService;
 
+    private String mockUrlID = "4bCd3F6h1Jk";
+
     /* PERSON VARS */
     private String nameBale = "Christian Bale";
     private String dOBBale = "30-Jan-1974";
-    private Person christianBale = Person.createPerson(nameBale, dOBBale);
+    private Person christianBale = Person.createPerson(nameBale, dOBBale, mockUrlID);
 
     private String nameNolan = "Christopher Nolan";
     private String dOBNolan = "30-Jul-1970";
-    private Person chrisNolan = Person.createPerson(nameNolan, dOBNolan);
+    private Person chrisNolan = Person.createPerson(nameNolan, dOBNolan, mockUrlID);
 
     /* TITLE VARS  */
     private String titleName = "The Dark Knight";
@@ -76,7 +80,7 @@ public class MutationResolverTest {
     private Integer titleLength = 154;
     private String titleStoryline = "The second title in Nolan's epic Dark Knight trilogy.";
     private String titleTagline = "Why so serious?";
-    private Title darkKnight = new Title(titleName, titleSummary, titleReleased, titleCertRating, titleLength, titleStoryline, titleTagline);
+    private Title darkKnight = new Title(titleName, titleSummary, titleReleased, titleCertRating, titleLength, titleStoryline, titleTagline, mockUrlID);
 
     /* ACTEDINRELATION VARS */
     private List<String> characters = Arrays.asList("Bruce Wayne", "Batman");
@@ -87,17 +91,17 @@ public class MutationResolverTest {
     private String awardOrganisation = "Academy Awards";
 
     private String awardLeadingRole = "Best Performance by an Actor in a Leading Role";
-    private Award awardLead = new Award(awardLeadingRole, awardOrganisation);
+    private Award awardLead = new Award(awardLeadingRole, awardOrganisation, mockUrlID);
 
     private String awardSupportingRole = "Best Performance by an Actor in a Supporting Role";
-    private Award awardSupp = new Award(awardSupportingRole, awardOrganisation);
+    private Award awardSupp = new Award(awardSupportingRole, awardOrganisation, mockUrlID);
 
     /* DIRECTED RELATION VARS */
     private DirectedRelation directedRelation = new DirectedRelation(chrisNolan, darkKnight);
 
     /* GENRE VARS */
     private String genreName = "Thriller";
-    private Genre genre = new Genre(genreName);
+    private Genre genre = new Genre(genreName, mockUrlID);
 
     /* GENRE RELATION VARS */
     private GenreRelation genreRelation = new GenreRelation(darkKnight, genre);

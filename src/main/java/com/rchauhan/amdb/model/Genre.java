@@ -23,18 +23,18 @@ public class Genre {
 
     private String name;
 
+    private String urlID;
+
     @Relationship(type = "GENRE", direction = Relationship.INCOMING)
     List<GenreRelation> movies = new ArrayList<>();
 
-    public Genre() {
-    }
-
-    public Genre(String name) {
-        this.name = name;
-    }
-
     public Genre(UUID id) {
         this.id = id;
+    }
+
+    public Genre(String name, String urlID) {
+        this.name = name;
+        this.urlID = urlID;
     }
 
     public UUID getId() {
@@ -43,6 +43,10 @@ public class Genre {
 
     public String getName() {
         return name;
+    }
+
+    public String getUrlID() {
+        return urlID;
     }
 
     public List<GenreRelation> getMovies() {
@@ -54,6 +58,7 @@ public class Genre {
         return "Genre{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", urlID='" + urlID + '\'' +
                 '}';
     }
 

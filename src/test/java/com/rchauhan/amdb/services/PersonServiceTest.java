@@ -3,6 +3,7 @@ package com.rchauhan.amdb.services;
 import com.rchauhan.amdb.exceptions.PersonExistsException;
 import com.rchauhan.amdb.model.Person;
 import com.rchauhan.amdb.repositories.PersonRepository;
+import com.rchauhan.amdb.utils.URLGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,37 +24,41 @@ import static org.mockito.Mockito.when;
 public class PersonServiceTest {
 
     @Mock
+    URLGenerator urlGenerator;
+
+    @Mock
     PersonRepository personRepository;
 
     @InjectMocks
     private PersonService personService = new PersonService();
 
+    private UUID id = UUID.randomUUID();
+    private String name = "Leonardo DiCaprio";
+    private String dateOfBirth = "1974-11-11";
+    private String urlID = "4bCd3F6h1Jk";
+
     @Test
     public void getPersonByIDTest() {
-        UUID id = UUID.randomUUID();
         personService.getPerson(id);
         verify(personRepository).findById(id);
     }
 
     @Test
     public void getPersonByNameAndDateOfBirthTest() {
-        String name = "Leonardo DiCaprio";
-        String dateOfBirth = "1974-11-11";
         personService.getPersonByNameAndDateOfBirth(name, dateOfBirth);
         verify(personRepository).getPersonByNameAndDateOfBirth(name, dateOfBirth);
     }
 
     @Test
     public void createPersonWhenPersonExistsTest() throws ParseException {
-        String name = "Leonardo DiCaprio";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateOfBirth = sdf.parse("1974-11-11");
+        Date dOB = sdf.parse(dateOfBirth);
 
         when(personRepository.getPersonByNameAndDateOfBirth(name, "11-Nov-1974"))
-                .thenReturn(Optional.of(new Person("Leonardo DiCaprio", dateOfBirth)));
+                .thenReturn(Optional.of(new Person(name, dOB, urlID)));
 
         Exception exception = assertThrows(PersonExistsException.class, () -> {
-            personService.createPerson(name, dateOfBirth);
+            personService.createPerson(name, dOB);
         });
 
         String expectedMessage = "A person with name Leonardo DiCaprio and date of birth 11-Nov-1974 already exists.";
@@ -63,23 +68,22 @@ public class PersonServiceTest {
 
     @Test
     public void createPersonWhenDoesNotExist() throws ParseException {
-        String name = "Leonardo DiCaprio";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateOfBirth = sdf.parse("1974-11-11");
-        when(personRepository.getPersonByNameAndDateOfBirth(name, "11-Nov-1974"))
-                .thenReturn(Optional.empty());
-        Person leo = new Person(name, dateOfBirth);
+        Date dOB = sdf.parse(dateOfBirth);
+        Person leo = new Person(name, dOB, urlID);
 
+        when(personRepository.getPersonByNameAndDateOfBirth(name, "11-Nov-1974")).thenReturn(Optional.empty());
+        when(urlGenerator.createURLString()).thenReturn(urlID);
         when(personRepository.save(leo)).thenReturn(leo);
 
-        Person person = personService.createPerson(name, dateOfBirth);
+        Person person = personService.createPerson(name, dOB);
         assertEquals(name, person.getName());
-        assertEquals(dateOfBirth, person.getDateOfBirth());
+        assertEquals(dOB, person.getDateOfBirth());
+        assertEquals(urlID, person.getUrlID());
     }
 
     @Test
     public void personExistsIDNotFoundTest() {
-        UUID id = UUID.randomUUID();
         when(personRepository.findById(id))
                 .thenReturn(Optional.empty());
 
@@ -88,36 +92,30 @@ public class PersonServiceTest {
 
     @Test
     public void personExistsIDFoundTest() throws ParseException {
-        UUID id = UUID.randomUUID();
-        String name = "Joe Bloggs";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateOfBirth = sdf.parse("2000-01-01");
+        Date dOB = sdf.parse(dateOfBirth);
+
         when(personRepository.findById(id))
-                .thenReturn(Optional.of(new Person(name, dateOfBirth)));
+                .thenReturn(Optional.of(new Person(name, dOB, urlID)));
 
         assertTrue(personService.personExists(id));
     }
 
     @Test
     public void personExistsNameAndDateOfBirthNotFoundTest() {
-        String name = "Joe Bloggs";
-        String dOB = "01-Jan-2000";
-        when(personRepository.getPersonByNameAndDateOfBirth(name, dOB))
+        when(personRepository.getPersonByNameAndDateOfBirth(name, dateOfBirth))
                 .thenReturn(Optional.empty());
 
-        assertFalse(personService.personExists(name, dOB));
+        assertFalse(personService.personExists(name, dateOfBirth));
     }
 
     @Test
     public void personExistsNameAndDateOfBirthFoundTest() throws ParseException {
-        String name = "Joe Bloggs";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateOfBirth = sdf.parse("2000-01-01");
-        String dOB = "01-Jan-2000";
-        when(personRepository.getPersonByNameAndDateOfBirth(name, dOB))
-                .thenReturn(Optional.of(new Person(name, dateOfBirth)));
-
-        assertTrue(personService.personExists(name, dOB));
+        Date dOB = sdf.parse(dateOfBirth);
+        when(personRepository.getPersonByNameAndDateOfBirth(name, dateOfBirth))
+                .thenReturn(Optional.of(new Person(name, dOB, urlID)));
+        assertTrue(personService.personExists(name, dateOfBirth));
     }
 
 }

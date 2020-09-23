@@ -1,8 +1,14 @@
 package com.rchauhan.amdb.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.rchauhan.amdb.model.*;
-import com.rchauhan.amdb.services.*;
+import com.rchauhan.amdb.model.Award;
+import com.rchauhan.amdb.model.Genre;
+import com.rchauhan.amdb.model.Person;
+import com.rchauhan.amdb.model.Title;
+import com.rchauhan.amdb.services.AwardService;
+import com.rchauhan.amdb.services.GenreService;
+import com.rchauhan.amdb.services.PersonService;
+import com.rchauhan.amdb.services.TitleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

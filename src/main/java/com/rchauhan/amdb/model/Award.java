@@ -24,6 +24,8 @@ public class Award {
 
     private String organisation;
 
+    private String urlID;
+
     @Relationship(type = "NOMINATED", direction = Relationship.INCOMING)
     private List<NominatedRelation> nominations;
 
@@ -38,9 +40,10 @@ public class Award {
         this.id = id;
     }
 
-    public Award(String name, String organisation) {
+    public Award(String name, String organisation, String urlID) {
         this.name = name;
         this.organisation = organisation;
+        this.urlID = urlID;
     }
 
     public UUID getId() {
@@ -53,6 +56,10 @@ public class Award {
 
     public String getOrganisation() {
         return organisation;
+    }
+
+    public String getUrlID() {
+        return urlID;
     }
 
     public List<NominatedRelation> getNominations() {
@@ -68,6 +75,8 @@ public class Award {
         return "Award{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", organisation='" + organisation + '\'' +
+                ", urlID='" + urlID + '\'' +
                 '}';
     }
 

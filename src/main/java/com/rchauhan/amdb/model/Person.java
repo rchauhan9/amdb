@@ -27,6 +27,8 @@ public class Person {
     @DateString(Constants.PERSON_DOB_FORMAT)
     private Date dateOfBirth;
 
+    private String urlID;
+
     @Relationship(type = "ACTED_IN")
     private List<ActedInRelation> actedIn = new ArrayList<>();
 
@@ -52,9 +54,10 @@ public class Person {
         this.id = id;
     }
 
-    public Person(String name, Date dateOfBirth) {
+    public Person(String name, Date dateOfBirth, String urlID) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
+        this.urlID = urlID;
     }
 
     public UUID getId() {
@@ -67,6 +70,10 @@ public class Person {
 
     public Date getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public String getUrlID() {
+        return urlID;
     }
 
     public List<ActedInRelation> getActedIn() {
@@ -99,6 +106,7 @@ public class Person {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
+                ", urlID='" + urlID + '\'' +
                 '}';
     }
 
@@ -115,7 +123,7 @@ public class Person {
         return Objects.hash(id);
     }
 
-    public static Person createPerson(String name, String dOB) {
+    public static Person createPerson(String name, String dOB, String urlID) {
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.PERSON_DOB_FORMAT);
         Date dateOfBirth = new Date();
         try {
@@ -123,6 +131,6 @@ public class Person {
         } catch (ParseException e) {
             System.out.println("Could not parse date of birth");
         }
-        return new Person(name, dateOfBirth);
+        return new Person(name, dateOfBirth, urlID);
     }
 }

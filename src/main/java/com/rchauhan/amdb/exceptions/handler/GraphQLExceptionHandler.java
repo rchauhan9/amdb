@@ -1,11 +1,12 @@
 package com.rchauhan.amdb.exceptions.handler;
 
-import graphql.*;
-import graphql.kickstart.execution.error.*;
-import org.springframework.stereotype.*;
+import graphql.ExceptionWhileDataFetching;
+import graphql.GraphQLError;
+import graphql.kickstart.execution.error.GraphQLErrorHandler;
+import org.springframework.stereotype.Component;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class GraphQLExceptionHandler implements GraphQLErrorHandler {

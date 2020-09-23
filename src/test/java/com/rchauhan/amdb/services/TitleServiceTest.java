@@ -3,6 +3,7 @@ package com.rchauhan.amdb.services;
 import com.rchauhan.amdb.exceptions.TitleExistsException;
 import com.rchauhan.amdb.model.Title;
 import com.rchauhan.amdb.repositories.TitleRepository;
+import com.rchauhan.amdb.utils.URLGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,6 +21,9 @@ import static org.mockito.Mockito.when;
 public class TitleServiceTest {
 
     @Mock
+    URLGenerator urlGenerator;
+
+    @Mock
     TitleRepository titleRepository;
 
     @InjectMocks
@@ -33,6 +37,8 @@ public class TitleServiceTest {
     private Integer titleLengthInMins = 154;
     private String storyline = "The second title in Nolan's epic Dark Knight trilogy";
     private String tagline = "Why so serious?";
+    private String urlID = "4bCd3F6h1Jk";
+
 
     @Test
     public void getTitleByIDTest() {
@@ -49,7 +55,7 @@ public class TitleServiceTest {
     @Test
     public void createTitleWhenTitleExistsTest() {
         when(titleRepository.findByNameAndReleased(name, released))
-                .thenReturn(Optional.of(new Title(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline)));
+                .thenReturn(Optional.of(new Title(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline, urlID)));
         Exception exception = assertThrows(TitleExistsException.class, () -> {
             titleService.createTitle(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline);
         });
@@ -60,9 +66,10 @@ public class TitleServiceTest {
 
     @Test
     public void createTitleWhenDoesNotExistTest() {
+        Title darkKnight = new Title(name, summary, released, certificateRating, titleLengthInMins,  storyline, tagline, urlID);
         when(titleRepository.findByNameAndReleased(name, released))
                 .thenReturn(Optional.empty());
-        Title darkKnight = new Title(name, summary, released, certificateRating, titleLengthInMins,  storyline, tagline);
+        when(urlGenerator.createURLString()).thenReturn(urlID);
         when(titleRepository.save(darkKnight)).thenReturn(darkKnight);
 
         Title title = titleService.createTitle(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline);
@@ -73,6 +80,7 @@ public class TitleServiceTest {
         assertEquals(titleLengthInMins, title.getTitleLengthInMins());
         assertEquals(storyline, title.getStoryline());
         assertEquals(tagline, title.getTagline());
+        assertEquals(urlID, title.getUrlID());
     }
 
     @Test
@@ -84,7 +92,7 @@ public class TitleServiceTest {
     @Test
     public void titleExistsByNameAndReleased() {
         when(titleRepository.findByNameAndReleased(name, released))
-                .thenReturn(Optional.of(new Title(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline)));
+                .thenReturn(Optional.of(new Title(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline, urlID)));
         assertTrue(titleService.titleExists(name, released));
     }
 
@@ -97,7 +105,7 @@ public class TitleServiceTest {
     @Test
     public void titleExistsByID() {
         when(titleRepository.findById(id))
-                .thenReturn(Optional.of(new Title(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline)));
+                .thenReturn(Optional.of(new Title(name, summary, released, certificateRating, titleLengthInMins, storyline, tagline, urlID)));
         assertTrue(titleService.titleExists(id));
     }
 

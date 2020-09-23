@@ -5,6 +5,7 @@ import com.graphql.spring.boot.test.GraphQLTest;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import com.rchauhan.amdb.model.*;
 import com.rchauhan.amdb.services.*;
+import com.rchauhan.amdb.utils.URLGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class QueryResolverTest {
 
     @Autowired
     private GraphQLTestTemplate graphQLTestTemplate;
+
+    @MockBean
+    URLGenerator urlGenerator;
 
     @MockBean
     ActedInRelationService actedInRelationService;
@@ -59,20 +63,21 @@ public class QueryResolverTest {
     WroteRelationService wroteRelationService;
 
     private UUID mockUUID = UUID.fromString("d9436d98-4585-4661-9cf8-a4857332043a");
+    private String mockUrlID = "4bCd3F6h1Jk";
 
     /* AWARD VARS */
     private String awardLeadingRole = "Best Performance by an Actor in a Leading Role";
     private String awardOrganisation = "Academy Awards";
-    private Award awardLead = new Award(awardLeadingRole, awardOrganisation);
+    private Award awardLead = new Award(awardLeadingRole, awardOrganisation, mockUrlID);
 
     /* GENRE VARS */
     private String genreName = "Thriller";
-    private Genre genre = new Genre(genreName);
+    private Genre genre = new Genre(genreName, mockUrlID);
 
     /* PERSON VARS */
     private String nameBale = "Christian Bale";
     private String dOBBale = "30-Jan-1974";
-    private Person christianBale = Person.createPerson(nameBale, dOBBale);
+    private Person christianBale = Person.createPerson(nameBale, dOBBale, mockUrlID);
 
     /* TITLE VARS  */
     private String titleName = "The Dark Knight";
@@ -82,7 +87,7 @@ public class QueryResolverTest {
     private Integer titleLength = 154;
     private String titleStoryline = "The second title in Nolan's epic Dark Knight trilogy.";
     private String titleTagline = "Why so serious?";
-    private Title darkKnight = new Title(titleName, titleSummary, titleReleased, titleCertRating, titleLength, titleStoryline, titleTagline);
+    private Title darkKnight = new Title(titleName, titleSummary, titleReleased, titleCertRating, titleLength, titleStoryline, titleTagline, mockUrlID);
 
     @Test
     public void getAwardByIDTest() throws IOException {

@@ -1,6 +1,9 @@
 package com.rchauhan.amdb.model;
 
-import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.typeconversion.Convert;
 import org.neo4j.ogm.id.UuidStrategy;
 import org.neo4j.ogm.typeconversion.UuidStringConverter;
@@ -32,6 +35,8 @@ public class Title {
 
     private String tagline;
 
+    private String urlID;
+
     @Relationship(type = "GENRE")
     private List<GenreRelation> genres;
 
@@ -54,7 +59,7 @@ public class Title {
         this.id = id;
     }
 
-    public Title(String name, String summary, Integer released, String certificateRating, Integer titleLengthInMins, String storyline, String tagline) {
+    public Title(String name, String summary, Integer released, String certificateRating, Integer titleLengthInMins, String storyline, String tagline, String urlID) {
         this.name = name;
         this.summary = summary;
         this.released = released;
@@ -62,6 +67,7 @@ public class Title {
         this.titleLengthInMins = titleLengthInMins;
         this.storyline = storyline;
         this.tagline = tagline;
+        this.urlID = urlID;
     }
 
     public UUID getId() {
@@ -94,6 +100,10 @@ public class Title {
 
     public String getTagline() {
         return tagline;
+    }
+
+    public String getUrlID() {
+        return urlID;
     }
 
     public List<ActedInRelation> getCast() {
@@ -134,6 +144,7 @@ public class Title {
                 ", titleLengthInMins=" + titleLengthInMins +
                 ", storyline='" + storyline + '\'' +
                 ", tagline='" + tagline + '\'' +
+                ", urlID='" + urlID + '\'' +
                 '}';
     }
 

@@ -3,6 +3,7 @@ package com.rchauhan.amdb.services;
 import com.rchauhan.amdb.exceptions.GenreExistsException;
 import com.rchauhan.amdb.model.Genre;
 import com.rchauhan.amdb.repositories.GenreRepository;
+import com.rchauhan.amdb.utils.URLGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -21,33 +22,38 @@ import static org.mockito.Mockito.when;
 public class GenreServiceTest {
 
     @Mock
+    URLGenerator urlGenerator;
+
+    @Mock
     GenreRepository genreRepository;
 
     @InjectMocks
     private GenreService genreService = new GenreService();
 
-    private UUID genreID = UUID.randomUUID();
-    private String genreName = "Thriller";
+    private UUID id = UUID.randomUUID();
+    private String name = "Thriller";
+    private String urlID = "4bCd3F6h1Jk";
+
 
     @Test
     public void getGenreByIDTest() {
-        genreService.getGenre(genreID);
-        verify(genreRepository).findById(genreID);
+        genreService.getGenre(id);
+        verify(genreRepository).findById(id);
     }
 
     @Test
     public void getGenreByNameTest() {
-        genreService.getGenreByName(genreName);
-        verify(genreRepository).findByName(genreName);
+        genreService.getGenreByName(name);
+        verify(genreRepository).findByName(name);
     }
 
     @Test
     public void createGenreWhenGenreExistsTest() {
-        Genre genre = new Genre(genreName);
-        when(genreRepository.findByName(genreName)).thenReturn(Optional.of(genre));
+        Genre genre = new Genre(name, urlID);
+        when(genreRepository.findByName(name)).thenReturn(Optional.of(genre));
 
         Exception exception = assertThrows(GenreExistsException.class, () -> {
-            genreService.createGenre(genreName);
+            genreService.createGenre(name);
         });
 
         String expectedMessage = "A genre with the name Thriller exists already";
@@ -56,10 +62,12 @@ public class GenreServiceTest {
 
     @Test
     public void createGenreWhenDoesNotExist() {
-        Genre thriller = new Genre(genreName);
-        when(genreRepository.findByName(genreName)).thenReturn(Optional.empty());
+        Genre thriller = new Genre(name, urlID);
+        when(genreRepository.findByName(name)).thenReturn(Optional.empty());
+        when(urlGenerator.createURLString()).thenReturn(urlID);
         when(genreRepository.save(thriller)).thenReturn(thriller);
-        Genre genre = genreService.createGenre(genreName);
-        assertEquals(genreName, genre.getName());
+        Genre genre = genreService.createGenre(name);
+        assertEquals(name, genre.getName());
+        assertEquals(urlID, genre.getUrlID());
     }
 }
