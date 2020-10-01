@@ -46,11 +46,11 @@ public class Title {
     @Relationship(type = "DIRECTED", direction = Relationship.INCOMING)
     private List<DirectedRelation> directors;
 
-    @Relationship(type = "WROTE", direction = Relationship.INCOMING)
-    private List<WroteRelation> writers;
-
     @Relationship(type = "PRODUCED", direction = Relationship.INCOMING)
     private List<ProducedRelation> producers;
+
+    @Relationship(type = "WROTE", direction = Relationship.INCOMING)
+    private List<WroteRelation> writers;
 
     public Title() {
     }

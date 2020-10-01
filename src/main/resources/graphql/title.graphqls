@@ -2,13 +2,15 @@ type Title {
     id: ID!
     name: String!
     summary: String
-    released: Int
+    released: Int!
     certificateRating: String
     titleLengthInMins: Int
     storyline: String
     tagline: String
+    urlID: String!
     genres: [GenreRelation]
     cast: [ActedInRelation]
     directors: [DirectedRelation]
+    producers: [ProducedRelation]
     writers: [WroteRelation]
 }

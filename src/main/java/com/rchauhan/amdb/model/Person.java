@@ -35,11 +35,11 @@ public class Person {
     @Relationship(type = "DIRECTED")
     private List<DirectedRelation> directed = new ArrayList<>();
 
-    @Relationship(type = "WROTE")
-    private List<WroteRelation> wrote;
-
     @Relationship(type = "PRODUCED")
     private List<ProducedRelation> produced;
+
+    @Relationship(type = "WROTE")
+    private List<WroteRelation> wrote;
 
     @Relationship(type = "NOMINATED")
     private List<NominatedRelation> awardNominations;

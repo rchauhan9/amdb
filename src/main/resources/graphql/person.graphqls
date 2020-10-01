@@ -1,7 +1,12 @@
 type Person {
     id: ID!
     name: String!
-    dateOfBirth: String
+    dateOfBirth: String!
+    urlID: String!
     actedIn: [ActedInRelation]
     directed: [DirectedRelation]
+    produced: [ProducedRelation]
+    wrote: [WroteRelation]
+    awardNominations: [NominatedRelation]
+    awardWins: [WonRelation]
 }

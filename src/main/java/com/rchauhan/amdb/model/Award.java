@@ -32,7 +32,6 @@ public class Award {
     @Relationship(type = "WON", direction = Relationship.INCOMING)
     private List<NominatedRelation> wins;
 
-
     public Award() {
     }
 

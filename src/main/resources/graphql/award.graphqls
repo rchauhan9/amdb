@@ -2,4 +2,7 @@ type Award {
     id: ID!
     name: String!
     organisation: String!
+    urlID: String!
+    nominations: [NominatedRelation]
+    wins: [WonRelation]
 }

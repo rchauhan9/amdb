@@ -1,6 +1,0 @@
-mutation {
-  createAwardOrganisation(name: "Academy Awards", yearEstablishedIn: 1929) {
-    name
-    yearEstablishedIn
-  }
-}
