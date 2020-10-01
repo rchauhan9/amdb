@@ -2,4 +2,5 @@ type ProducedRelation {
     id: Int!
     person: Person!
     title: Title!
+    items: [String]
 }

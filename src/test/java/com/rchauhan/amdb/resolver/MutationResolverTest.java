@@ -112,7 +112,8 @@ public class MutationResolverTest {
     private NominatedRelation nominatedRelation = new NominatedRelation(nominationYear, titleIDNom, christianBale, awardLead);
 
     /* PRODUCED RELATION VARS */
-    private ProducedRelation producedRelation = new ProducedRelation(chrisNolan, darkKnight);
+    private List<String> producedItems = Arrays.asList("executive producer");
+    private ProducedRelation producedRelation = new ProducedRelation(chrisNolan, darkKnight, producedItems);
 
     /* WON RELATION VARS */
     private String titleIDWon = "5516e648-ecb5-4b08-97e0-1615ce4e111a"; // a made up titleID e.g. for the film The Fighter (2011).
@@ -120,8 +121,8 @@ public class MutationResolverTest {
     private WonRelation wonRelation = new WonRelation(wonYear, titleIDWon, christianBale, awardSupp);
 
     /* WROTE RELATION VARS */
-    private List<String> items = Arrays.asList("Screenplay", "Story");
-    private WroteRelation wroteRelation = new WroteRelation(items, chrisNolan, darkKnight);
+    private List<String> wroteItems = Arrays.asList("Screenplay", "Story");
+    private WroteRelation wroteRelation = new WroteRelation(chrisNolan, darkKnight, wroteItems);
 
     @Test
     public void createActedInRelationTest() throws IOException {
@@ -199,7 +200,7 @@ public class MutationResolverTest {
 
     @Test
     public void createProducedRelationTest() throws IOException {
-        when(producedRelationService.createProducedRelation(nameNolan, dOBNolan, titleName, titleReleased))
+        when(producedRelationService.createProducedRelation(nameNolan, dOBNolan, titleName, titleReleased, producedItems))
                 .thenReturn(producedRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createProducedRelation.graphql");
         assertTrue(response.isOk());
@@ -207,6 +208,7 @@ public class MutationResolverTest {
         assertEquals(producedRelation.getTitle().getName(), response.get("$.data.createProducedRelation.title.name", String.class));
         assertEquals(producedRelation.getTitle().getReleased(), response.get("$.data.createProducedRelation.title.released", Integer.class));
         assertEquals(producedRelation.getTitle().getTitleLengthInMins(), response.get("$.data.createProducedRelation.title.titleLengthInMins", Integer.class));
+        assertEquals(producedRelation.getItems(), response.get("$.data.createProducedRelation.items", ArrayList.class));
     }
 
     @Test
@@ -238,7 +240,7 @@ public class MutationResolverTest {
 
     @Test
     public void createWroteRelationTest() throws IOException {
-        when(wroteRelationService.createWroteRelation(nameNolan, dOBNolan, titleName, titleReleased, items))
+        when(wroteRelationService.createWroteRelation(nameNolan, dOBNolan, titleName, titleReleased, wroteItems))
                 .thenReturn(wroteRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createWroteRelation.graphql");
         assertTrue(response.isOk());

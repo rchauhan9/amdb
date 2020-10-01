@@ -2,6 +2,8 @@ package com.rchauhan.amdb.model;
 
 import org.neo4j.ogm.annotation.*;
 
+import java.util.List;
+
 @RelationshipEntity(type = "PRODUCED")
 public class ProducedRelation {
 
@@ -15,12 +17,15 @@ public class ProducedRelation {
     @EndNode
     Title title;
 
+    private List<String> items;
+
     public ProducedRelation() {
     }
 
-    public ProducedRelation(Person person, Title title) {
+    public ProducedRelation(Person person, Title title, List<String> items) {
         this.person = person;
         this.title = title;
+        this.items = items;
     }
 
     public Long getId() {
@@ -33,5 +38,9 @@ public class ProducedRelation {
 
     public Title getTitle() {
         return title;
+    }
+
+    public List<String> getItems() {
+        return items;
     }
 }

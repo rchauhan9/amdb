@@ -7,7 +7,7 @@ type Mutation {
     createActedInRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int, characters: [String], billing: Int): ActedInRelation
     createDirectedRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int): DirectedRelation
     createWroteRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int, items: [String]): WroteRelation
-    createProducedRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int): ProducedRelation
+    createProducedRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int, items: [String]): ProducedRelation
     createGenreRelation(titleName: String, titleReleased: Int, genreName: String): GenreRelation
     createNominatedRelation(personName: String, personDOB: String, awardName: String, awardOrganisation: String, titleID: String, nominationYear: Int): NominatedRelation
     createWonRelation(personName: String, personDOB: String, awardName: String, awardOrganisation: String, titleID: String, wonYear: Int): WonRelation

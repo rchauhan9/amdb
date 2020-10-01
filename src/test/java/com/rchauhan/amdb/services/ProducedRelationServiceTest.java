@@ -13,6 +13,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -41,13 +43,14 @@ public class ProducedRelationServiceTest {
     private String personDOB = "30-Jan-1970";
     private String titleName = "The Dark Knight";
     private Integer titleReleased = 2008;
+    private List<String> items = Arrays.asList("executive producer");
 
     @Test
     public void createProducedRelationWhenPersonDoesNotExistTest() {
         when(personService.getPersonByNameAndDateOfBirth(personName, personDOB))
                 .thenReturn(Optional.empty());
         Exception exception = assertThrows(PersonDoesNotExistException.class, () -> {
-            producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased);
+            producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased, items);
         });
 
         String expectedMessage = "Cannot create PRODUCED relation between Person Christopher Nolan and Title The Dark Knight. Person does not exist.";
@@ -61,7 +64,7 @@ public class ProducedRelationServiceTest {
         when(titleService.getTitleByNameAndReleased(titleName, titleReleased))
                 .thenReturn(Optional.empty());
         Exception exception = assertThrows(TitleDoesNotExistException.class, () -> {
-            producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased);
+            producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased, items);
         });
 
         String expectedMessage = "Cannot create PRODUCED relation between Person Christopher Nolan and Title The Dark Knight. Title does not exist.";
@@ -77,7 +80,7 @@ public class ProducedRelationServiceTest {
         when(producedRelationRepository.getProducedRelation(personID, titleID))
                 .thenReturn(Optional.of(new ProducedRelation()));
         Exception exception = assertThrows(ProducedRelationExistsException.class, () -> {
-            producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased);
+            producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased, items);
         });
 
         String expectedMessage = "PRODUCED relation between person: Christopher Nolan and title: The Dark Knight already exists.";
@@ -94,11 +97,12 @@ public class ProducedRelationServiceTest {
                 .thenReturn(Optional.of(title));
         when(producedRelationRepository.getProducedRelation(personID, titleID))
                 .thenReturn(Optional.empty());
-        ProducedRelation producedRelation = new ProducedRelation(person, title);
-        when(producedRelationRepository.createProducedRelation(personID, titleID))
+        ProducedRelation producedRelation = new ProducedRelation(person, title, items);
+        when(producedRelationRepository.createProducedRelation(personID, titleID, items))
                 .thenReturn(producedRelation);
-        ProducedRelation dr = producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased);
-        assertEquals(personID, dr.getPerson().getId());
-        assertEquals(titleID, dr.getTitle().getId());
+        ProducedRelation pr = producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased, items);
+        assertEquals(personID, pr.getPerson().getId());
+        assertEquals(titleID, pr.getTitle().getId());
+        assertEquals(items, pr.getItems());
     }
 }

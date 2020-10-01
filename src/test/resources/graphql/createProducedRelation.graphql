@@ -1,5 +1,5 @@
 mutation {
-  createProducedRelation(personName:"Christopher Nolan", personDOB:"30-Jul-1970", titleName:"The Dark Knight", titleReleased:2008) {
+  createProducedRelation(personName:"Christopher Nolan", personDOB:"30-Jul-1970", titleName:"The Dark Knight", titleReleased:2008, items: ["executive producer"]) {
     person {
       name
     }
@@ -8,5 +8,6 @@ mutation {
       released
       titleLengthInMins
     }
+    items
   }
 }

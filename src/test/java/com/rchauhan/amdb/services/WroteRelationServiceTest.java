@@ -96,7 +96,7 @@ public class WroteRelationServiceTest {
                 .thenReturn(Optional.of(title));
         when(wroteRelationRepository.getWroteRelation(personID, titleID))
                 .thenReturn(Optional.empty());
-        WroteRelation wroteRelation = new WroteRelation(items, person, title);
+        WroteRelation wroteRelation = new WroteRelation(person, title, items);
         when(wroteRelationRepository.createWroteRelation(personID, titleID, items))
                 .thenReturn(wroteRelation);
         WroteRelation wr = wroteRelationService.createWroteRelation(personName, personDOB, titleName, titleReleased, items);

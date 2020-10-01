@@ -11,21 +11,21 @@ public class WroteRelation {
     @GeneratedValue
     private Long id;
 
-    private List<String> items;
-
     @StartNode
     private Person person;
 
     @EndNode
     private Title title;
 
+    private List<String> items;
+
     public WroteRelation() {
     }
 
-    public WroteRelation(List<String> items, Person person, Title title) {
-        this.items = items;
+    public WroteRelation(Person person, Title title, List<String> items) {
         this.person = person;
         this.title = title;
+        this.items = items;
     }
 
     public WroteRelation(List<String> items) {

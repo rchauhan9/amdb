@@ -10,6 +10,7 @@ import com.rchauhan.amdb.repositories.ProducedRelationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class ProducedRelationService {
     @Autowired
     TitleService titleService;
 
-    public ProducedRelation createProducedRelation(String personName, String personDOB, String titleName, Integer titleReleased) {
+    public ProducedRelation createProducedRelation(String personName, String personDOB, String titleName, Integer titleReleased, List<String> items) {
 
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {
@@ -41,7 +42,7 @@ public class ProducedRelationService {
             throw new ProducedRelationExistsException(String.format("PRODUCED relation between person: %s and title: %s already exists.", personName, titleName));
         }
 
-        return producedRelationRepository.createProducedRelation(person.get().getId(), title.get().getId());
+        return producedRelationRepository.createProducedRelation(person.get().getId(), title.get().getId(), items);
     }
 
     private boolean producedRelationExists(UUID personID, UUID titleID) {
