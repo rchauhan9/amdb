@@ -26,7 +26,7 @@ public class WonRelationService {
     AwardService awardService;
 
 
-    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String awardOrganisation, String titleID, Integer wonYear) {
+    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String awardOrganisation, Integer wonYear, String titleName, Integer titleReleased) {
 
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {
@@ -40,17 +40,16 @@ public class WonRelationService {
                             personName, awardName));
         }
 
-        if (wonRelationExists(person.get().getId(), award.get().getId(), titleID, wonYear)) {
+        if (wonRelationExists(person.get().getId(), award.get().getId(), wonYear, titleName, titleReleased)) {
             throw new WonRelationExistsException(
-                    String.format("WON relation between person: %s and award: %s for title %s and year %d already exists.",
-                            personName, awardName, titleID, wonYear));
+                    String.format("WON relation between person: %s and award: %s for title %s (%d) and year %d already exists.",
+                            personName, awardName, titleName, titleReleased, wonYear));
         }
 
-//        return wonRelationRepository.save(new WonRelation(wonYear, titleID, person.get(), award.get()));
-        return wonRelationRepository.createWonRelation(person.get().getId(), award.get().getId(), titleID, wonYear);
+        return wonRelationRepository.createWonRelation(person.get().getId(), award.get().getId(), wonYear, titleName, titleReleased);
     }
 
-    private boolean wonRelationExists(UUID personID, UUID awardID, String titleID, Integer wonYear) {
-        return wonRelationRepository.getWonRelation(personID, awardID, titleID, wonYear).isPresent();
+    private boolean wonRelationExists(UUID personID, UUID awardID, Integer wonYear, String titleName, Integer titleReleased) {
+        return wonRelationRepository.getWonRelation(personID, awardID, wonYear, titleName, titleReleased).isPresent();
     }
 }

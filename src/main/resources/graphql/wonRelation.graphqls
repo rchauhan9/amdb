@@ -1,7 +1,8 @@
 type WonRelation {
     id: Int!
-    year: Int!
-    titleID: String!
     person: Person!
     award: Award!
+    year: Int!
+    titleName: String!
+    titleReleased: Int!
 }

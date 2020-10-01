@@ -42,13 +42,14 @@ public class WonRelationServiceTest {
     private String awardName = "Best Performance by an Actor in a Leading Role";
     private String awardOrganisation = "Academy Awards";
     private Integer wonYear = 2016;
-    private String titleID = UUID.randomUUID().toString();
+    private String titleName = "The Revenant";
+    private Integer titleReleased = 2015;
 
     @Test
     public void createWonRelationWhenPersonDoesNotExistTest() {
         when(personService.getPersonByNameAndDateOfBirth(personName, personDOB)).thenReturn(Optional.empty());
         Exception exception = assertThrows(PersonDoesNotExistException.class, () -> {
-            wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, titleID, wonYear);
+            wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, wonYear, titleName, titleReleased);
         });
         String expectedMessage = "Cannot create WON relation between Person Leonardo DiCaprio and " +
                 "Award Best Performance by an Actor in a Leading Role. Person does not exist.";
@@ -60,7 +61,7 @@ public class WonRelationServiceTest {
         when(personService.getPersonByNameAndDateOfBirth(personName, personDOB)).thenReturn(Optional.of(new Person(personID)));
         when(awardService.getAwardByNameAndOrganisation(awardName, awardOrganisation)).thenReturn(Optional.empty());
         Exception exception = assertThrows(AwardDoesNotExistException.class, () -> {
-            wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, titleID, wonYear);
+            wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, wonYear, titleName, titleReleased);
         });
         String expectedMessage = "Cannot create WON relation between Person Leonardo DiCaprio and " +
                 "Award Best Performance by an Actor in a Leading Role. Award does not exist.";
@@ -71,12 +72,12 @@ public class WonRelationServiceTest {
     public void createWonRelationWhenItExistsTest() {
         when(personService.getPersonByNameAndDateOfBirth(personName, personDOB)).thenReturn(Optional.of(new Person(personID)));
         when(awardService.getAwardByNameAndOrganisation(awardName, awardOrganisation)).thenReturn(Optional.of(new Award(awardID)));
-        when(wonRelationRepository.getWonRelation(personID, awardID, titleID, wonYear)).thenReturn(Optional.of(new WonRelation()));
+        when(wonRelationRepository.getWonRelation(personID, awardID, wonYear, titleName, titleReleased)).thenReturn(Optional.of(new WonRelation()));
         Exception exception = assertThrows(WonRelationExistsException.class, () -> {
-            wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, titleID, wonYear);
+            wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, wonYear, titleName, titleReleased);
         });
         String expectedMessage = "WON relation between person: Leonardo DiCaprio and award: Best " +
-                "Performance by an Actor in a Leading Role for title " + titleID + " and year 2016 already exists.";
+                "Performance by an Actor in a Leading Role for title The Revenant (2015) and year 2016 already exists.";
         assertEquals(expectedMessage, exception.getMessage());
     }
 
@@ -86,14 +87,15 @@ public class WonRelationServiceTest {
         when(personService.getPersonByNameAndDateOfBirth(personName, personDOB)).thenReturn(Optional.of(person));
         Award award = new Award(awardID);
         when(awardService.getAwardByNameAndOrganisation(awardName, awardOrganisation)).thenReturn(Optional.of(award));
-        when(wonRelationRepository.getWonRelation(personID, awardID, titleID, wonYear)).thenReturn(Optional.empty());
-        WonRelation wonRelation = new WonRelation(wonYear, titleID, person, award);
-        when(wonRelationRepository.createWonRelation(personID, awardID, titleID, wonYear)).thenReturn(wonRelation);
+        when(wonRelationRepository.getWonRelation(personID, awardID, wonYear, titleName, titleReleased)).thenReturn(Optional.empty());
+        WonRelation wonRelation = new WonRelation(person, award, wonYear, titleName, titleReleased);
+        when(wonRelationRepository.createWonRelation(personID, awardID, wonYear, titleName, titleReleased)).thenReturn(wonRelation);
 
-        WonRelation wr = wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, titleID, wonYear);
+        WonRelation wr = wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, wonYear, titleName, titleReleased);
         assertEquals(personID, wr.getPerson().getId());
         assertEquals(awardID, wr.getAward().getId());
-        assertEquals(titleID, wr.getTitleID());
         assertEquals(wonYear, wr.getYear());
+        assertEquals(titleName, wr.getTitleName());
+        assertEquals(titleReleased, wr.getTitleReleased());
     }
 }

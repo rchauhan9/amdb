@@ -81,8 +81,8 @@ public class MutationResolver implements GraphQLMutationResolver {
         return titleService.createTitle(title, summary, released, certificateRating, titleLengthInMins, storyline, tagline);
     }
 
-    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String awardOrganisation, String titleID, Integer wonYear) {
-        return wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, titleID, wonYear);
+    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String awardOrganisation, Integer wonYear, String titleName, Integer titleReleased) {
+        return wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, wonYear, titleName, titleReleased);
     }
 
     public WroteRelation createWroteRelation(String personName, String personDOB, String titleName, Integer titleReleased, List<String> items) {

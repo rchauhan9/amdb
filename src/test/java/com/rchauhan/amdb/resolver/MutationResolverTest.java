@@ -117,9 +117,10 @@ public class MutationResolverTest {
     private ProducedRelation producedRelation = new ProducedRelation(chrisNolan, darkKnight, producedItems);
 
     /* WON RELATION VARS */
-    private String titleIDWon = "5516e648-ecb5-4b08-97e0-1615ce4e111a"; // a made up titleID e.g. for the film The Fighter (2011).
+    private String titleNameWon = "The Fighter";
+    private Integer titleReleasedWon = 2010;
     private Integer wonYear = 2011;
-    private WonRelation wonRelation = new WonRelation(wonYear, titleIDWon, christianBale, awardSupp);
+    private WonRelation wonRelation = new WonRelation(christianBale, awardSupp, wonYear, titleNameWon, titleReleasedWon);
 
     /* WROTE RELATION VARS */
     private List<String> wroteItems = Arrays.asList("Screenplay", "Story");
@@ -230,14 +231,15 @@ public class MutationResolverTest {
 
     @Test
     public void createWonRelationTest() throws IOException {
-        when(wonRelationService.createWonRelation(nameBale, dOBBale, awardSupportingRole, awardOrganisation, titleIDWon, wonYear))
+        when(wonRelationService.createWonRelation(nameBale, dOBBale, awardSupportingRole, awardOrganisation, wonYear, titleNameWon, titleReleasedWon))
                 .thenReturn(wonRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createWonRelation.graphql");
         assertTrue(response.isOk());
         assertEquals(wonRelation.getPerson().getName(), response.get("$.data.createWonRelation.person.name", String.class));
         assertEquals(wonRelation.getAward().getName(), response.get("$.data.createWonRelation.award.name", String.class));
-        assertEquals(wonRelation.getTitleID(), response.get("$.data.createWonRelation.titleID", String.class));
         assertEquals(wonRelation.getYear(), response.get("$.data.createWonRelation.year", Integer.class));
+        assertEquals(wonRelation.getTitleName(), response.get("$.data.createWonRelation.titleName", String.class));
+        assertEquals(wonRelation.getTitleReleased(), response.get("$.data.createWonRelation.titleReleased", Integer.class));
     }
 
     @Test

@@ -10,5 +10,5 @@ type Mutation {
     createProducedRelation(personName: String, personDOB: String, titleName: String, titleReleased: Int, items: [String]): ProducedRelation
     createGenreRelation(titleName: String, titleReleased: Int, genreName: String): GenreRelation
     createNominatedRelation(personName: String, personDOB: String, awardName: String, awardOrganisation: String, nominationYear: Int, titleName: String, titleReleased: Int): NominatedRelation
-    createWonRelation(personName: String, personDOB: String, awardName: String, awardOrganisation: String, titleID: String, wonYear: Int): WonRelation
+    createWonRelation(personName: String, personDOB: String, awardName: String, awardOrganisation: String, wonYear: Int, titleName: String, titleReleased: Int): WonRelation
 }

@@ -11,9 +11,9 @@ import java.util.UUID;
 @Repository
 public interface WonRelationRepository extends Neo4jRepository<WonRelation, Long> {
 
-    @Query("MATCH (p:Person{id: $personID})-[w:WON{titleID: $titleID, year: $wonYear}]->(a:Award{id: $awardID}) RETURN p, w, a")
-    Optional<WonRelation> getWonRelation(UUID personID, UUID awardID, String titleID, Integer wonYear);
+    @Query("MATCH (p:Person{id: $personID})-[w:WON{year: $wonYear, titleName: $titleName, titleReleased: $titleReleased}]->(a:Award{id: $awardID}) RETURN p, w, a")
+    Optional<WonRelation> getWonRelation(UUID personID, UUID awardID, Integer wonYear, String titleName, Integer titleReleased);
 
-    @Query("MATCH (p:Person{id: $personID}), (a:Award{id: $awardID}) CREATE (p)-[w:WON {titleID: $titleID, year: $wonYear}]->(a) RETURN p, w, a")
-    WonRelation createWonRelation(UUID personID, UUID awardID, String titleID, Integer wonYear);
+    @Query("MATCH (p:Person{id: $personID}), (a:Award{id: $awardID}) CREATE (p)-[w:WON {year: $wonYear, titleName: $titleName, titleReleased: $titleReleased}]->(a) RETURN p, w, a")
+    WonRelation createWonRelation(UUID personID, UUID awardID, Integer wonYear, String titleName, Integer titleReleased);
 }

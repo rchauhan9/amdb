@@ -9,36 +9,29 @@ public class WonRelation {
     @GeneratedValue
     private Long id;
 
-    private Integer year;
-
-    private String titleID;
-
     @StartNode
     private Person person;
 
     @EndNode
     private Award award;
 
+    private Integer year;
+    private String titleName;
+    private Integer titleReleased;
+
     public WonRelation() {
     }
 
-    public WonRelation(Integer year, String titleID, Person person, Award award) {
-        this.year = year;
-        this.titleID = titleID;
+    public WonRelation(Person person, Award award, Integer year, String titleName, Integer titleReleased) {
         this.person = person;
         this.award = award;
+        this.year = year;
+        this.titleName = titleName;
+        this.titleReleased = titleReleased;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public String getTitleID() {
-        return titleID;
     }
 
     public Person getPerson() {
@@ -49,12 +42,20 @@ public class WonRelation {
         return award;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public Integer getYear() {
+        return year;
     }
 
-    public void setTitleID(String titleID) {
-        this.titleID = titleID;
+    public String getTitleName() {
+        return titleName;
+    }
+
+    public Integer getTitleReleased() {
+        return titleReleased;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public void setPerson(Person person) {
