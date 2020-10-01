@@ -25,7 +25,7 @@ public class NominatedRelationService {
     @Autowired
     AwardService awardService;
 
-    public NominatedRelation createNominatedRelation(String personName, String personDOB, String awardName, String awardOrganisation, String titleID, Integer nominationYear) {
+    public NominatedRelation createNominatedRelation(String personName, String personDOB, String awardName, String awardOrganisation, Integer nominationYear, String titleName, Integer titleReleased) {
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {
             throw new PersonDoesNotExistException(String.format("Cannot create NOMINATED relation between Person %s and Award %s. Person does not exist.", personName, awardName));
@@ -38,16 +38,16 @@ public class NominatedRelationService {
                             personName, awardName));
         }
 
-        if (nominatedRelationExists(person.get().getId(), award.get().getId(), titleID, nominationYear)) {
+        if (nominatedRelationExists(person.get().getId(), award.get().getId(), nominationYear, titleName, titleReleased)) {
             throw new NominatedRelationExistsException(
-                    String.format("NOMINATED relation between person: %s and award: %s for title %s and year %d already exists.",
-                            personName, awardName, titleID, nominationYear));
+                    String.format("NOMINATED relation between person: %s and award: %s for title %s (%d) and year %d already exists.",
+                            personName, awardName,titleName, titleReleased, nominationYear));
         }
 
-        return nominatedRelationRepository.createNominatedRelation(person.get().getId(), award.get().getId(), titleID, nominationYear);
+        return nominatedRelationRepository.createNominatedRelation(person.get().getId(), award.get().getId(), nominationYear, titleName, titleReleased);
     }
 
-    private boolean nominatedRelationExists(UUID personID, UUID awardID, String titleID, Integer nominationYear) {
-        return nominatedRelationRepository.getNominatedRelation(personID, awardID, titleID, nominationYear).isPresent();
+    private boolean nominatedRelationExists(UUID personID, UUID awardID, Integer nominationYear, String titleName, Integer titleReleased) {
+        return nominatedRelationRepository.getNominatedRelation(personID, awardID, nominationYear, titleName, titleReleased).isPresent();
     }
 }

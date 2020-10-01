@@ -9,36 +9,29 @@ public class NominatedRelation {
     @GeneratedValue
     private Long id;
 
-    private Integer year;
-
-    private String titleID;
-
     @StartNode
     private Person person;
 
     @EndNode
     private Award award;
 
+    private Integer year;
+    private String titleName;
+    private Integer titleReleased;
+
     public NominatedRelation() {
     }
 
-    public NominatedRelation(Integer year, String titleID, Person person, Award award) {
-        this.year = year;
-        this.titleID = titleID;
+    public NominatedRelation(Person person, Award award, Integer year, String titleName, Integer titleReleased) {
         this.person = person;
         this.award = award;
+        this.year = year;
+        this.titleName = titleName;
+        this.titleReleased = titleReleased;
     }
 
     public Long getId() {
         return id;
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public String getTitleID() {
-        return titleID;
     }
 
     public Person getPerson() {
@@ -47,5 +40,17 @@ public class NominatedRelation {
 
     public Award getAward() {
         return award;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public String getTitleName() {
+        return titleName;
+    }
+
+    public Integer getTitleReleased() {
+        return titleReleased;
     }
 }

@@ -107,9 +107,10 @@ public class MutationResolverTest {
     private GenreRelation genreRelation = new GenreRelation(darkKnight, genre);
 
     /* NOMINATED RELATION VARS */
-    private String titleIDNom = "485b62e8-8ab2-42ed-b6d1-59582915b5b5"; // a made up titleID e.g. for the film Vice (2018).
+    private String titleNameNom = "Vice";
+    private Integer titleReleasedNom = 2018;
     private Integer nominationYear = 2019;
-    private NominatedRelation nominatedRelation = new NominatedRelation(nominationYear, titleIDNom, christianBale, awardLead);
+    private NominatedRelation nominatedRelation = new NominatedRelation(christianBale, awardLead, nominationYear, titleNameNom, titleReleasedNom);
 
     /* PRODUCED RELATION VARS */
     private List<String> producedItems = Arrays.asList("executive producer");
@@ -179,14 +180,15 @@ public class MutationResolverTest {
 
     @Test
     public void createNominatedRelationTest() throws IOException {
-        when(nominatedRelationService.createNominatedRelation(nameBale, dOBBale, awardLeadingRole, awardOrganisation, titleIDNom, nominationYear))
+        when(nominatedRelationService.createNominatedRelation(nameBale, dOBBale, awardLeadingRole, awardOrganisation, nominationYear, titleNameNom, titleReleasedNom))
                 .thenReturn(nominatedRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createNominatedRelation.graphql");
         assertTrue(response.isOk());
         assertEquals(nominatedRelation.getPerson().getName(), response.get("$.data.createNominatedRelation.person.name", String.class));
         assertEquals(nominatedRelation.getAward().getName(), response.get("$.data.createNominatedRelation.award.name", String.class));
-        assertEquals(nominatedRelation.getTitleID(), response.get("$.data.createNominatedRelation.titleID", String.class));
         assertEquals(nominatedRelation.getYear(), response.get("$.data.createNominatedRelation.year", Integer.class));
+        assertEquals(nominatedRelation.getTitleName(), response.get("$.data.createNominatedRelation.titleName", String.class));
+        assertEquals(nominatedRelation.getTitleReleased(), response.get("$.data.createNominatedRelation.titleReleased", Integer.class));
     }
 
     @Test

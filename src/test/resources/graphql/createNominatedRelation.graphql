@@ -1,5 +1,5 @@
 mutation {
-  createNominatedRelation(personName:"Christian Bale", personDOB:"30-Jan-1974", awardName:"Best Performance by an Actor in a Leading Role", awardOrganisation: "Academy Awards", titleID:"485b62e8-8ab2-42ed-b6d1-59582915b5b5", nominationYear:2019) {
+  createNominatedRelation(personName:"Christian Bale", personDOB:"30-Jan-1974", awardName:"Best Performance by an Actor in a Leading Role", awardOrganisation: "Academy Awards", nominationYear:2019, titleName: "Vice", titleReleased: 2018) {
     person {
       name
     }
@@ -7,6 +7,7 @@ mutation {
       name
     }
     year
-    titleID
+    titleName
+    titleReleased
   }
 }
