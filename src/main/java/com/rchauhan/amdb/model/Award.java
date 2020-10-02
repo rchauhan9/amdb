@@ -30,7 +30,7 @@ public class Award {
     private List<NominatedRelation> nominations;
 
     @Relationship(type = "WON", direction = Relationship.INCOMING)
-    private List<NominatedRelation> wins;
+    private List<WonRelation> wins;
 
     public Award() {
     }
@@ -65,7 +65,7 @@ public class Award {
         return nominations;
     }
 
-    public List<NominatedRelation> getWins() {
+    public List<WonRelation> getWins() {
         return wins;
     }
 
