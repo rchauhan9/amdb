@@ -28,6 +28,9 @@ public class Genre {
     @Relationship(type = "GENRE", direction = Relationship.INCOMING)
     List<GenreRelation> movies = new ArrayList<>();
 
+    public Genre() {
+    }
+
     public Genre(UUID id) {
         this.id = id;
     }
