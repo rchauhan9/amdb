@@ -1,17 +1,12 @@
 package com.rchauhan.amdb.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import com.rchauhan.amdb.model.Award;
-import com.rchauhan.amdb.model.Genre;
-import com.rchauhan.amdb.model.Person;
-import com.rchauhan.amdb.model.Title;
-import com.rchauhan.amdb.services.AwardService;
-import com.rchauhan.amdb.services.GenreService;
-import com.rchauhan.amdb.services.PersonService;
-import com.rchauhan.amdb.services.TitleService;
+import com.rchauhan.amdb.model.*;
+import com.rchauhan.amdb.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,6 +24,9 @@ public class QueryResolver implements GraphQLQueryResolver {
 
     @Autowired
     TitleService titleService;
+
+    @Autowired
+    SearchableService searchableService;
 
     public Optional<Award> getAward(UUID id) {
         return awardService.getAward(id);
@@ -58,8 +56,16 @@ public class QueryResolver implements GraphQLQueryResolver {
         return titleService.getTitle(id);
     }
 
+    public Optional<Title> getTitleByUrlID(String urlID) {
+        return titleService.getTitleByUrlID(urlID);
+    }
+
     public Optional<Title> getTitleByNameAndReleased(String name, Integer released) {
         return titleService.getTitleByNameAndReleased(name, released);
+    }
+
+    public List<Searchable> getSearchableByName(String name) {
+        return searchableService.getSearchableByName(name);
     }
 
 }

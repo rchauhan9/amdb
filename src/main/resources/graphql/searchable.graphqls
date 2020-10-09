@@ -1,0 +1,5 @@
+interface Searchable {
+    id: ID!
+    name: String!
+    urlID: String!
+}

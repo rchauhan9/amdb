@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -54,6 +55,9 @@ public class QueryResolverTest {
     ProducedRelationService producedRelationService;
 
     @MockBean
+    SearchableService searchableService;
+
+    @MockBean
     TitleService titleService;
 
     @MockBean
@@ -88,6 +92,19 @@ public class QueryResolverTest {
     private String titleStoryline = "The second title in Nolan's epic Dark Knight trilogy.";
     private String titleTagline = "Why so serious?";
     private Title darkKnight = new Title(titleName, titleSummary, titleReleased, titleCertRating, titleLength, titleStoryline, titleTagline, mockUrlID);
+
+    /* SEARCHABLE VARS */
+    private String bjmName = "Being John Malkovich";
+    private String bjmSummary = "A puppeteer discovers a portal that leads literally into the head of movie star John Malkovich";
+    private Integer bjmReleased = 1999;
+    private String bjmCertificateRating = "15";
+    private Integer bjmTitleLengthInMins = 113;
+    private String bjmStoryline = "Puppeteer Craig Schwartz finds a portal the leads into the head of John Malkovich";
+    private String bjmTagline = "Be All That Someone Else Can Be";
+    private String bjmUrlID = "6SNW-eo67E8";
+
+    private Title beingJM = new Title(bjmName, bjmSummary, bjmReleased, bjmCertificateRating, bjmTitleLengthInMins, bjmStoryline, bjmTagline, bjmUrlID);
+    private Person johnMalkovich = Person.createPerson("John Malkovich", "09-Sep-1953", "1a2B3c4D5e-");
 
     @Test
     public void getAwardByIDTest() throws IOException {
@@ -138,6 +155,17 @@ public class QueryResolverTest {
         assert(response.isOk());
         assertEquals(christianBale.getName(), response.get("$.data.personByNameAndDateOfBirth.name", String.class));
         assertEquals(christianBale.getDateOfBirth().toString(), response.get("$.data.personByNameAndDateOfBirth.dateOfBirth", String.class));
+    }
+
+    @Test
+    public void getSeachableByName() throws IOException {
+        when(searchableService.getSearchableByName("John Malkovich")).thenReturn(Arrays.asList(beingJM, johnMalkovich));
+        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getSearchableByName.graphql");
+        assert(response.isOk());
+        assertEquals(beingJM.getName(), response.get("$.data.searchableByName[0].name", String.class));
+        assertEquals(beingJM.getReleased(), response.get("$.data.searchableByName[0].released", Integer.class));
+        assertEquals(johnMalkovich.getName(), response.get("$.data.searchableByName[1].name", String.class));
+        assertEquals(johnMalkovich.getDateOfBirth().toString(), response.get("$.data.searchableByName[1].dateOfBirth", String.class));
     }
 
     @Test

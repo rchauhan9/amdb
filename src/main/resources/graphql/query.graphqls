@@ -2,9 +2,11 @@ type Query {
     person(id: ID): Person
     personByNameAndDateOfBirth(name: String, dateOfBirth: String): Person
     title(id: ID): Title
+    titleByUrlID(urlID: String): Title
     titleByNameAndReleased(name: String, released: Int): Title
     genre(id: ID): Genre
     genreByName(name: String): Genre
     award(id: ID): Award
     awardByNameAndOrganisation(name: String, organisation: String): Award
+    searchableByName(name: String): [Searchable]
 }

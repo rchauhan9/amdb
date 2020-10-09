@@ -1,4 +1,4 @@
-type Title {
+type Title implements Searchable {
     id: ID!
     name: String!
     summary: String

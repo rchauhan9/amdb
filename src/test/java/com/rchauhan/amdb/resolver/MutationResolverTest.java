@@ -53,6 +53,9 @@ public class MutationResolverTest {
     ProducedRelationService producedRelationService;
 
     @MockBean
+    SearchableService searchableService;
+
+    @MockBean
     TitleService titleService;
 
     @MockBean

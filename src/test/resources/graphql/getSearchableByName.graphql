@@ -1,0 +1,11 @@
+query {
+    searchableByName(name: "John Malkovich") {
+        name
+        ... on Title {
+            released
+        }
+        ... on Person {
+            dateOfBirth
+        }
+    }
+}

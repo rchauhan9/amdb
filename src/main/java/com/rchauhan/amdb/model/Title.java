@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @NodeEntity
-public class Title {
+public class Title implements Searchable {
 
     @Id
     @GeneratedValue(strategy = UuidStrategy.class)

@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @NodeEntity
-public class Person {
+public class Person implements Searchable {
 
     @Id
     @GeneratedValue(strategy = UuidStrategy.class)

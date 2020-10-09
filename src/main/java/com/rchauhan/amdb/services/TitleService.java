@@ -23,6 +23,10 @@ public class TitleService {
         return titleRepository.findById(id);
     }
 
+    public Optional<Title> getTitleByUrlID(String urlID) {
+        return titleRepository.findByUrlID(urlID);
+    }
+
     public Optional<Title> getTitleByNameAndReleased(String name, Integer released) {
         return titleRepository.findByNameAndReleased(name, released);
     }
