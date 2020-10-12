@@ -26,6 +26,10 @@ public class PersonService {
         return personRepository.findById(id);
     }
 
+    public Optional<Person> getPersonByUrlID(String urlID) {
+        return personRepository.findByUrlID(urlID);
+    }
+
     public Optional<Person> getPersonByNameAndDateOfBirth(String name, String dateOfBirth) {
         return personRepository.getPersonByNameAndDateOfBirth(name, dateOfBirth);
     }

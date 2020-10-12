@@ -1,5 +1,6 @@
 type Query {
     person(id: ID): Person
+    personByUrlID(urlID: String): Person
     personByNameAndDateOfBirth(name: String, dateOfBirth: String): Person
     title(id: ID): Title
     titleByUrlID(urlID: String): Title

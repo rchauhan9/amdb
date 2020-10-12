@@ -48,6 +48,8 @@ public class QueryResolver implements GraphQLQueryResolver {
         return personService.getPerson(id);
     }
 
+    public Optional<Person> getPersonByUrlID(String urlID) { return personService.getPersonByUrlID(urlID); }
+
     public Optional<Person> getPersonByNameAndDateOfBirth(String name, String dateOfBirth) {
         return personService.getPersonByNameAndDateOfBirth(name, dateOfBirth);
     }

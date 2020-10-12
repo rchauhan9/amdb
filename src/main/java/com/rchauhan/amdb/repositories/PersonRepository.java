@@ -14,5 +14,7 @@ public interface PersonRepository extends Neo4jRepository<Person, UUID> {
     @Query("MATCH (p:Person {name: $name, dateOfBirth: $dateOfBirth}) RETURN p")
     Optional<Person> getPersonByNameAndDateOfBirth(String name, String dateOfBirth);
 
+    Optional<Person> findByUrlID(String urlID);
+
     Optional<Person> findByNameAndDateOfBirth(String name, String dateOfBirth);
 }

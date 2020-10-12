@@ -149,6 +149,15 @@ public class QueryResolverTest {
     }
 
     @Test
+    public void getPersonByUrlIDTest() throws IOException {
+        when(personService.getPersonByUrlID(mockUrlID)).thenReturn(Optional.of(christianBale));
+        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getPersonByUrlID.graphql");
+        assert(response.isOk());
+        assertEquals(christianBale.getName(), response.get("$.data.personByUrlID.name", String.class));
+        assertEquals(christianBale.getDateOfBirth().toString(), response.get("$.data.personByUrlID.dateOfBirth", String.class));
+    }
+
+    @Test
     public void getPersonByNameAndDateOfBirthTest() throws IOException {
         when(personService.getPersonByNameAndDateOfBirth(nameBale, dOBBale)).thenReturn(Optional.of(christianBale));
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getPersonByNameAndDateOfBirth.graphql");
@@ -180,6 +189,20 @@ public class QueryResolverTest {
         assertEquals(darkKnight.getTitleLengthInMins(), response.get("$.data.title.titleLengthInMins", Integer.class));
         assertEquals(darkKnight.getStoryline(), response.get("$.data.title.storyline", String.class));
         assertEquals(darkKnight.getTagline(), response.get("$.data.title.tagline", String.class));
+    }
+
+    @Test
+    public void getTitleByUrlID() throws IOException {
+        when(titleService.getTitleByUrlID(mockUrlID)).thenReturn(Optional.of(darkKnight));
+        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getTitleByUrlID.graphql");
+        assert(response.isOk());
+        assertEquals(darkKnight.getName(), response.get("$.data.titleByUrlID.name", String.class));
+        assertEquals(darkKnight.getSummary(), response.get("$.data.titleByUrlID.summary", String.class));
+        assertEquals(darkKnight.getReleased(), response.get("$.data.titleByUrlID.released", Integer.class));
+        assertEquals(darkKnight.getCertificateRating(), response.get("$.data.titleByUrlID.certificateRating", String.class));
+        assertEquals(darkKnight.getTitleLengthInMins(), response.get("$.data.titleByUrlID.titleLengthInMins", Integer.class));
+        assertEquals(darkKnight.getStoryline(), response.get("$.data.titleByUrlID.storyline", String.class));
+        assertEquals(darkKnight.getTagline(), response.get("$.data.titleByUrlID.tagline", String.class));
     }
 
     @Test

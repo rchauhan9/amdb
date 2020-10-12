@@ -1,0 +1,6 @@
+query {
+  personByUrlID(urlID:"4bCd3F6h1Jk") {
+    name
+    dateOfBirth
+  }
+}
