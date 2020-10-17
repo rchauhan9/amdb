@@ -1,5 +1,5 @@
 query {
-    searchableByName(name: "John Malkovich") {
+    searchableByName(name: "John Malkovich~") {
         name
         ... on Title {
             released

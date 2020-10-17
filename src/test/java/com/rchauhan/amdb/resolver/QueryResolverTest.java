@@ -5,7 +5,6 @@ import com.graphql.spring.boot.test.GraphQLTest;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import com.rchauhan.amdb.model.*;
 import com.rchauhan.amdb.services.*;
-import com.rchauhan.amdb.utils.URLGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +25,6 @@ public class QueryResolverTest {
 
     @Autowired
     private GraphQLTestTemplate graphQLTestTemplate;
-
-    @MockBean
-    URLGenerator urlGenerator;
 
     @MockBean
     ActedInRelationService actedInRelationService;
@@ -167,8 +163,8 @@ public class QueryResolverTest {
     }
 
     @Test
-    public void getSeachableByName() throws IOException {
-        when(searchableService.getSearchableByName("John Malkovich")).thenReturn(Arrays.asList(beingJM, johnMalkovich));
+    public void getSearchableByName() throws IOException {
+        when(searchableService.getSearchableByName("John Malkovich~")).thenReturn(Arrays.asList(beingJM, johnMalkovich));
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getSearchableByName.graphql");
         assert(response.isOk());
         assertEquals(beingJM.getName(), response.get("$.data.searchableByName[0].name", String.class));
