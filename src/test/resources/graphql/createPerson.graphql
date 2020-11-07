@@ -1,6 +1,7 @@
 mutation {
-  createPerson(name:"Christian Bale", dateOfBirth:"1974-01-30") {
+  createPerson(name:"Christian Bale", dateOfBirth:"1974-01-30", bio: "Most famous for his role as Bruce Wayne in the Dark Knight trilogy...") {
     name
     dateOfBirth
+    bio
   }
 }

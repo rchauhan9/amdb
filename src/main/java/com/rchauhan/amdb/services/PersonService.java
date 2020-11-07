@@ -34,13 +34,13 @@ public class PersonService {
         return personRepository.getPersonByNameAndDateOfBirth(name, dateOfBirth);
     }
 
-    public Person createPerson(String name, Date dateOfBirth) throws PersonExistsException {
+    public Person createPerson(String name, Date dateOfBirth, String bio) throws PersonExistsException {
         SimpleDateFormat formatter = new SimpleDateFormat(Constants.PERSON_DOB_FORMAT);
         if (personExists(name, formatter.format(dateOfBirth))) {
             throw new PersonExistsException(String.format("A person with name %s and date of birth %s already exists.", name, formatter.format(dateOfBirth)));
         }
 
-        return personRepository.save(new Person(name, dateOfBirth, urlGenerator.createURLString()));
+        return personRepository.save(new Person(name, dateOfBirth, bio, urlGenerator.createURLString()));
     }
 
     public boolean personExists(String name, String dateOfBirth) {

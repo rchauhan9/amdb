@@ -69,11 +69,13 @@ public class MutationResolverTest {
     /* PERSON VARS */
     private String nameBale = "Christian Bale";
     private String dOBBale = "30-Jan-1974";
-    private Person christianBale = Person.createPerson(nameBale, dOBBale, mockUrlID);
+    private String bioBale = "Most famous for his role as Bruce Wayne in the Dark Knight trilogy...";
+    private Person christianBale = Person.createPerson(nameBale, dOBBale, bioBale, mockUrlID);
 
     private String nameNolan = "Christopher Nolan";
     private String dOBNolan = "30-Jul-1970";
-    private Person chrisNolan = Person.createPerson(nameNolan, dOBNolan, mockUrlID);
+    private String bioNolan = "One of the most acclaimed directors of our time, Nolan is responsible for...";
+    private Person chrisNolan = Person.createPerson(nameNolan, dOBNolan, bioNolan, mockUrlID);
 
     /* TITLE VARS  */
     private String titleName = "The Dark Knight";
@@ -197,11 +199,12 @@ public class MutationResolverTest {
 
     @Test
     public void createPersonTest() throws IOException {
-        when(personService.createPerson(nameBale, christianBale.getDateOfBirth())).thenReturn(christianBale);
+        when(personService.createPerson(nameBale, christianBale.getDateOfBirth(), bioBale)).thenReturn(christianBale);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createPerson.graphql");
         assertTrue(response.isOk());
         assertEquals(christianBale.getName(), response.get("$.data.createPerson.name"));
         assertEquals(christianBale.getDateOfBirth().toString(), response.get("$.data.createPerson.dateOfBirth"));
+        assertEquals(christianBale.getBio(), response.get("$.data.createPerson.bio"));
     }
 
     @Test

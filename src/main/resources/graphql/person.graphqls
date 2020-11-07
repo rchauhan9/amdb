@@ -2,6 +2,7 @@ type Person implements Searchable {
     id: ID!
     name: String!
     dateOfBirth: String!
+    bio: String!
     urlID: String!
     actedIn: [ActedInRelation]
     directed: [DirectedRelation]

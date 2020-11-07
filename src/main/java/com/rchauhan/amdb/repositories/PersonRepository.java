@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface PersonRepository extends Neo4jRepository<Person, UUID> {
 
-    @Query("MATCH (p:Person {name: $name, dateOfBirth: $dateOfBirth}) RETURN p")
+    @Query("MATCH (p:Person {name: $name, dateOfBirth: $dateOfBirth})-[r]-(e) RETURN p,r,e")
     Optional<Person> getPersonByNameAndDateOfBirth(String name, String dateOfBirth);
 
     Optional<Person> findByUrlID(String urlID);

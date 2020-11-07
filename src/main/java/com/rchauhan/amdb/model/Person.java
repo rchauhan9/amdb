@@ -27,6 +27,8 @@ public class Person implements Searchable {
     @DateString(Constants.PERSON_DOB_FORMAT)
     private Date dateOfBirth;
 
+    private String bio;
+
     private String urlID;
 
     @Relationship(type = "ACTED_IN")
@@ -36,16 +38,16 @@ public class Person implements Searchable {
     private List<DirectedRelation> directed = new ArrayList<>();
 
     @Relationship(type = "PRODUCED")
-    private List<ProducedRelation> produced;
+    private List<ProducedRelation> produced = new ArrayList<>();
 
     @Relationship(type = "WROTE")
-    private List<WroteRelation> wrote;
+    private List<WroteRelation> wrote = new ArrayList<>();
 
     @Relationship(type = "NOMINATED")
-    private List<NominatedRelation> awardNominations;
+    private List<NominatedRelation> awardNominations = new ArrayList<>();
 
     @Relationship(type = "WON")
-    private List<WonRelation> awardWins;
+    private List<WonRelation> awardWins = new ArrayList<>();
 
     public Person() {
     }
@@ -54,9 +56,10 @@ public class Person implements Searchable {
         this.id = id;
     }
 
-    public Person(String name, Date dateOfBirth, String urlID) {
+    public Person(String name, Date dateOfBirth, String bio, String urlID) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
+        this.bio = bio;
         this.urlID = urlID;
     }
 
@@ -70,6 +73,10 @@ public class Person implements Searchable {
 
     public Date getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public String getBio() {
+        return bio;
     }
 
     public String getUrlID() {
@@ -106,6 +113,7 @@ public class Person implements Searchable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
+                ", bio='" + bio + '\'' +
                 ", urlID='" + urlID + '\'' +
                 '}';
     }
@@ -123,7 +131,7 @@ public class Person implements Searchable {
         return Objects.hash(id);
     }
 
-    public static Person createPerson(String name, String dOB, String urlID) {
+    public static Person createPerson(String name, String dOB, String bio, String urlID) {
         SimpleDateFormat sdf = new SimpleDateFormat(Constants.PERSON_DOB_FORMAT);
         Date dateOfBirth = new Date();
         try {
@@ -131,6 +139,6 @@ public class Person implements Searchable {
         } catch (ParseException e) {
             System.out.println("Could not parse date of birth");
         }
-        return new Person(name, dateOfBirth, urlID);
+        return new Person(name, dateOfBirth, bio, urlID);
     }
 }

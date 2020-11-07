@@ -35,6 +35,7 @@ public class PersonServiceTest {
     private UUID id = UUID.randomUUID();
     private String name = "Leonardo DiCaprio";
     private String dateOfBirth = "1974-11-11";
+    private String bio = "From teenage heartthrob to leading actor, Leonardo DiCaprio has...";
     private String urlID = "4bCd3F6h1Jk";
 
     @Test
@@ -55,10 +56,10 @@ public class PersonServiceTest {
         Date dOB = sdf.parse(dateOfBirth);
 
         when(personRepository.getPersonByNameAndDateOfBirth(name, "11-Nov-1974"))
-                .thenReturn(Optional.of(new Person(name, dOB, urlID)));
+                .thenReturn(Optional.of(new Person(name, dOB, bio, urlID)));
 
         Exception exception = assertThrows(PersonExistsException.class, () -> {
-            personService.createPerson(name, dOB);
+            personService.createPerson(name, dOB, bio);
         });
 
         String expectedMessage = "A person with name Leonardo DiCaprio and date of birth 11-Nov-1974 already exists.";
@@ -70,13 +71,13 @@ public class PersonServiceTest {
     public void createPersonWhenDoesNotExist() throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dOB = sdf.parse(dateOfBirth);
-        Person leo = new Person(name, dOB, urlID);
+        Person leo = new Person(name, dOB, bio, urlID);
 
         when(personRepository.getPersonByNameAndDateOfBirth(name, "11-Nov-1974")).thenReturn(Optional.empty());
         when(urlGenerator.createURLString()).thenReturn(urlID);
         when(personRepository.save(leo)).thenReturn(leo);
 
-        Person person = personService.createPerson(name, dOB);
+        Person person = personService.createPerson(name, dOB, bio);
         assertEquals(name, person.getName());
         assertEquals(dOB, person.getDateOfBirth());
         assertEquals(urlID, person.getUrlID());
@@ -96,7 +97,7 @@ public class PersonServiceTest {
         Date dOB = sdf.parse(dateOfBirth);
 
         when(personRepository.findById(id))
-                .thenReturn(Optional.of(new Person(name, dOB, urlID)));
+                .thenReturn(Optional.of(new Person(name, dOB, bio, urlID)));
 
         assertTrue(personService.personExists(id));
     }
@@ -114,7 +115,7 @@ public class PersonServiceTest {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dOB = sdf.parse(dateOfBirth);
         when(personRepository.getPersonByNameAndDateOfBirth(name, dateOfBirth))
-                .thenReturn(Optional.of(new Person(name, dOB, urlID)));
+                .thenReturn(Optional.of(new Person(name, dOB, bio, urlID)));
         assertTrue(personService.personExists(name, dateOfBirth));
     }
 

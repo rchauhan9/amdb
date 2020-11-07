@@ -1,6 +1,7 @@
 query {
-  personByNameAndDateOfBirth(name:"Christian Bale", dateOfBirth:"30-Jan-1974") {
-    name
-    dateOfBirth
-  }
+    personByNameAndDateOfBirth(name:"Christian Bale", dateOfBirth:"30-Jan-1974") {
+        name
+        dateOfBirth
+        bio
+    }
 }
