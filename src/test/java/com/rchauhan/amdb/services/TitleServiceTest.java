@@ -47,6 +47,12 @@ public class TitleServiceTest {
     }
 
     @Test
+    public void getTitleByUrlIDTest() {
+        titleService.getTitleByUrlID(urlID);
+        verify(titleRepository).findByUrlID(urlID);
+    }
+
+    @Test
     public void getTitleByNameAndReleasedTest() {
         titleService.getTitleByNameAndReleased(name, released);
         verify(titleRepository).findByNameAndReleased(name, released);

@@ -129,6 +129,14 @@ public class QueryResolverTest {
     }
 
     @Test
+    public void getGenreByUrlID() throws IOException {
+        when(genreService.getGenreByUrlID(mockUrlID)).thenReturn(Optional.of(genre));
+        GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getGenreByUrlID.graphql");
+        assert(response.isOk());
+        assertEquals(genre.getName(), response.get("$.data.genreByUrlID.name", String.class));
+    }
+
+    @Test
     public void getGenreByName() throws IOException {
         when(genreService.getGenreByName(genreName)).thenReturn(Optional.of(genre));
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/getGenreByName.graphql");

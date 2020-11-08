@@ -45,6 +45,12 @@ public class PersonServiceTest {
     }
 
     @Test
+    public void getPersonByUrlIDTest() {
+        personService.getPersonByUrlID(urlID);
+        verify(personRepository).findByUrlID(urlID);
+    }
+
+    @Test
     public void getPersonByNameAndDateOfBirthTest() {
         personService.getPersonByNameAndDateOfBirth(name, dateOfBirth);
         verify(personRepository).getPersonByNameAndDateOfBirth(name, dateOfBirth);

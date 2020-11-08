@@ -6,6 +6,7 @@ type Query {
     titleByUrlID(urlID: String): Title
     titleByNameAndReleased(name: String, released: Int): Title
     genre(id: ID): Genre
+    genreByUrlID(urlID: String): Genre
     genreByName(name: String): Genre
     award(id: ID): Award
     awardByNameAndOrganisation(name: String, organisation: String): Award

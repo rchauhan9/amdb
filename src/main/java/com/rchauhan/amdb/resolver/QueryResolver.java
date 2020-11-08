@@ -40,6 +40,10 @@ public class QueryResolver implements GraphQLQueryResolver {
         return genreService.getGenre(id);
     }
 
+    public Optional<Genre> getGenreByUrlID(String urlID) {
+        return genreService.getGenreByUrlID(urlID);
+    }
+
     public Optional<Genre> getGenreByName(String name) {
         return genreService.getGenreByName(name);
     }

@@ -42,6 +42,12 @@ public class GenreServiceTest {
     }
 
     @Test
+    public void getGenreByUrlIDTest() {
+        genreService.getGenreByUrlID(urlID);
+        verify(genreRepository).findByUrlID(urlID);
+    }
+
+    @Test
     public void getGenreByNameTest() {
         genreService.getGenreByName(name);
         verify(genreRepository).findByName(name);

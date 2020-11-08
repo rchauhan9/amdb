@@ -11,4 +11,6 @@ import java.util.UUID;
 public interface GenreRepository extends Neo4jRepository<Genre, UUID> {
 
     Optional<Genre> findByName(String name);
+
+    Optional<Genre> findByUrlID(String urlID);
 }

@@ -23,6 +23,10 @@ public class GenreService {
         return genreRepository.findById(id);
     }
 
+    public Optional<Genre> getGenreByUrlID(String urlID) {
+        return genreRepository.findByUrlID(urlID);
+    }
+
     public Optional<Genre> getGenreByName(String name) {
         return genreRepository.findByName(name);
     }
