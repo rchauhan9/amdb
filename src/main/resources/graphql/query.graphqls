@@ -11,4 +11,6 @@ type Query {
     award(id: ID): Award
     awardByNameAndOrganisation(name: String, organisation: String): Award
     searchableByName(name: String): [Searchable]
+
+    healthcheck(info: String): String
 }

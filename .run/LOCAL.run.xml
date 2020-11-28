@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="LOCAL" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="amdb" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.rchauhan.amdb.AmdbApplication" />
+    <option name="ACTIVE_PROFILES" value="local" />
+    <option name="VM_PARAMETERS" value="-Dspring.profiles.active=local" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

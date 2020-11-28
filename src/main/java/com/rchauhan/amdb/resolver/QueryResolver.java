@@ -74,4 +74,8 @@ public class QueryResolver implements GraphQLQueryResolver {
         return searchableService.getSearchableByName(name);
     }
 
+    public String healthcheck(String info) {
+        return "Healthcheck: " + info;
+    }
+
 }
