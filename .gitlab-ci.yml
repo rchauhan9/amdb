@@ -16,7 +16,7 @@ package:
   image: docker:latest
   stage: package
   script:
-    - docker build -t rchauhan9/amdb-spring
+    - docker build -t rchauhan9/amdb-spring .
     - echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin
     - docker push rchauhan9/amdb-spring
   rules:
