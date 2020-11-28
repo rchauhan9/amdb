@@ -2,7 +2,7 @@ image: maven:3-jdk-11
 
 stages:
   - build
-  - test
+  - package
 
 cache:
   paths:
@@ -12,6 +12,12 @@ maven-build:
   stage: build
   script: mvn clean install
 
-maven-test:
-  stage: test
-  script: mvn clean test
+package:
+  image: docker:latest
+  stage: package
+  script:
+    - docker build -t rchauhan9/amdb-spring
+    - echo $DOCKER_PASSWORD | docker login -u $DOCKER_ID --password-stdin
+    - docker push rchauhan9/amdb-spring
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
