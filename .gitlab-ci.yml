@@ -2,6 +2,7 @@ image: maven:3-jdk-11
 
 stages:
   - build
+  - test
 
 cache:
   paths:
@@ -10,3 +11,7 @@ cache:
 maven-build:
   stage: build
   script: mvn clean install
+
+maven-test:
+  stage: test
+  script: mvn clean test
