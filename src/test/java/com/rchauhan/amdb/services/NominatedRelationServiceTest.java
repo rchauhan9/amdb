@@ -7,12 +7,14 @@ import com.rchauhan.amdb.model.Award;
 import com.rchauhan.amdb.model.NominatedRelation;
 import com.rchauhan.amdb.model.Person;
 import com.rchauhan.amdb.repositories.NominatedRelationRepository;
+import com.rchauhan.amdb.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -38,7 +40,7 @@ public class NominatedRelationServiceTest {
     private UUID personID = UUID.randomUUID();
     private UUID awardID = UUID.randomUUID();
     private String personName = "Leonardo DiCaprio";
-    private String personDOB = "11-Nov-1974";
+    private Date personDOB = DateUtil.createDate("dd-MMM-yyyy", "11-Nov-1974");
     private String awardName = "Best Performance by an Actor in a Leading Role";
     private String awardOrganisation = "Academy Awards";
     private Integer nominationYear = 2014;

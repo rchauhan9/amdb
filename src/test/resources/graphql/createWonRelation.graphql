@@ -1,12 +1,12 @@
 mutation {
   createWonRelation(
-  personName:"Christian Bale",
-  personDOB:"30-Jan-1974",
-  awardName:"Best Performance by an Actor in a Supporting Role",
-  awardOrganisation: "Academy Awards",
-  wonYear:2011,
-  titleName:"The Fighter",
-  titleReleased: 2010) {
+    personName:"Christian Bale",
+    personDOB:"1974-01-30",
+    awardName:"Best Performance by an Actor in a Supporting Role",
+    awardOrganisation: "Academy Awards",
+    wonYear:2011,
+    titleName:"The Fighter",
+    titleReleased: 2010) {
     person {
       name
     }

@@ -1,13 +1,13 @@
 mutation {
-  createDirectedRelation(personName:"Christopher Nolan", personDOB:"30-Jul-1970", titleName:"The Dark Knight", titleReleased:2008) {
-    person {
-      name
-      dateOfBirth
-    }
-    title {
-      name
-      released
-      certificateRating
-    }
+  createDirectedRelation(personName:"Christopher Nolan", personDOB:"1970-07-30", titleName:"The Dark Knight", titleReleased:2008) {
+      person {
+          name
+          dateOfBirth
+      }
+      title {
+          name
+          released
+          certificateRating
+      }
   }
 }

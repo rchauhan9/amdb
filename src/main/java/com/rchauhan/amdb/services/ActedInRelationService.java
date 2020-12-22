@@ -10,6 +10,7 @@ import com.rchauhan.amdb.repositories.ActedInRelationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,7 +31,7 @@ public class ActedInRelationService {
         return actedInRelationRepository.getMoviesStarring(name);
     }
 
-    public ActedInRelation createActedInRelation(String personName, String personDOB, String titleName, Integer titleReleased, List<String> characters, Integer billing) {
+    public ActedInRelation createActedInRelation(String personName, Date personDOB, String titleName, Integer titleReleased, List<String> characters, Integer billing) {
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {
             throw new PersonDoesNotExistException(String.format("Cannot create ACTED_IN relation between Person %s and Title %s. Person does not exist.", personName, titleName));

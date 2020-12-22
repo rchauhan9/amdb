@@ -45,7 +45,7 @@ public class MutationResolver implements GraphQLMutationResolver {
     @Autowired
     WroteRelationService wroteRelationService;
 
-    public ActedInRelation createActedInRelation(String personName, String personDOB, String titleName, Integer titleReleased, List<String> characters, Integer billing) {
+    public ActedInRelation createActedInRelation(String personName, Date personDOB, String titleName, Integer titleReleased, List<String> characters, Integer billing) {
         return actedInRelationService.createActedInRelation(personName, personDOB, titleName, titleReleased, characters, billing);
     }
 
@@ -53,7 +53,7 @@ public class MutationResolver implements GraphQLMutationResolver {
         return awardService.createAward(name, organisation);
     }
 
-    public DirectedRelation createDirectedRelation(String personName, String personDOB, String titleName, Integer titleReleased) {
+    public DirectedRelation createDirectedRelation(String personName, Date personDOB, String titleName, Integer titleReleased) {
         return directedRelationService.createDirectedRelation(personName, personDOB, titleName, titleReleased);
     }
 
@@ -65,7 +65,7 @@ public class MutationResolver implements GraphQLMutationResolver {
         return genreRelationService.createGenreRelation(titleName, titleReleased, genreName);
     }
 
-    public NominatedRelation createNominatedRelation(String personName, String personDOB, String awardName, String awardOrganisation, Integer nominationYear, String titleName, Integer titleReleased) {
+    public NominatedRelation createNominatedRelation(String personName, Date personDOB, String awardName, String awardOrganisation, Integer nominationYear, String titleName, Integer titleReleased) {
         return nominatedRelationService.createNominatedRelation(personName, personDOB, awardName, awardOrganisation, nominationYear, titleName, titleReleased);
     }
 
@@ -73,7 +73,7 @@ public class MutationResolver implements GraphQLMutationResolver {
         return personService.createPerson(name, dateOfBirth, bio);
     }
 
-    public ProducedRelation createProducedRelation(String personName, String personDOB, String titleName, Integer titleReleased, List<String> items) {
+    public ProducedRelation createProducedRelation(String personName, Date personDOB, String titleName, Integer titleReleased, List<String> items) {
         return producedRelationService.createProducedRelation(personName, personDOB, titleName, titleReleased, items);
     }
 
@@ -81,11 +81,11 @@ public class MutationResolver implements GraphQLMutationResolver {
         return titleService.createTitle(title, summary, released, certificateRating, titleLengthInMins, storyline, tagline);
     }
 
-    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String awardOrganisation, Integer wonYear, String titleName, Integer titleReleased) {
+    public WonRelation createWonRelation(String personName, Date personDOB, String awardName, String awardOrganisation, Integer wonYear, String titleName, Integer titleReleased) {
         return wonRelationService.createWonRelation(personName, personDOB, awardName, awardOrganisation, wonYear, titleName, titleReleased);
     }
 
-    public WroteRelation createWroteRelation(String personName, String personDOB, String titleName, Integer titleReleased, List<String> items) {
+    public WroteRelation createWroteRelation(String personName, Date personDOB, String titleName, Integer titleReleased, List<String> items) {
         return wroteRelationService.createWroteRelation(personName, personDOB, titleName, titleReleased, items);
     }
 

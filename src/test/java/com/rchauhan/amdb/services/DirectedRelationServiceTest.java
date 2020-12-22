@@ -7,14 +7,14 @@ import com.rchauhan.amdb.model.DirectedRelation;
 import com.rchauhan.amdb.model.Person;
 import com.rchauhan.amdb.model.Title;
 import com.rchauhan.amdb.repositories.DirectedRelationRepository;
+import com.rchauhan.amdb.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -40,7 +40,7 @@ public class DirectedRelationServiceTest {
     private UUID personID = UUID.randomUUID();
     private UUID titleID = UUID.randomUUID();
     private String personName = "Christopher Nolan";
-    private String personDOB = "30-Jan-1970";
+    private Date personDOB = DateUtil.createDate("dd-MMM-yyyy", "30-Jan-1970");
     private String titleName = "The Dark Knight";
     private Integer titleReleased = 2008;
 

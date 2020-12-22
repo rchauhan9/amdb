@@ -3,8 +3,12 @@ package com.rchauhan.amdb.resolver;
 import com.graphql.spring.boot.test.GraphQLResponse;
 import com.graphql.spring.boot.test.GraphQLTest;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
-import com.rchauhan.amdb.model.*;
+import com.rchauhan.amdb.model.Award;
+import com.rchauhan.amdb.model.Genre;
+import com.rchauhan.amdb.model.Person;
+import com.rchauhan.amdb.model.Title;
 import com.rchauhan.amdb.services.*;
+import com.rchauhan.amdb.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -76,9 +81,9 @@ public class QueryResolverTest {
 
     /* PERSON VARS */
     private String nameBale = "Christian Bale";
-    private String dOBBale = "30-Jan-1974";
+    private Date dOBBale = DateUtil.createDate("dd-MMM-yyyy", "30-Jan-1974");
     private String bioBale = "Most famous for his role as Bruce Wayne in the Dark Knight trilogy...";
-    private Person christianBale = Person.createPerson(nameBale, dOBBale, bioBale, mockUrlID);
+    private Person christianBale = new Person(nameBale, dOBBale, bioBale, mockUrlID);
 
     /* TITLE VARS  */
     private String titleName = "The Dark Knight";
@@ -101,7 +106,7 @@ public class QueryResolverTest {
     private String bjmUrlID = "6SNW-eo67E8";
 
     private Title beingJM = new Title(bjmName, bjmSummary, bjmReleased, bjmCertificateRating, bjmTitleLengthInMins, bjmStoryline, bjmTagline, bjmUrlID);
-    private Person johnMalkovich = Person.createPerson("John Malkovich", "09-Sep-1953", "Famous for playing himself in the title role...", "1a2B3c4D5e-");
+    private Person johnMalkovich = new Person("John Malkovich", DateUtil.createDate("dd-MMM-yyyy", "09-Sep-1953"), "Famous for playing himself in the title role...", "1a2B3c4D5e-");
 
     @Test
     public void getAwardByIDTest() throws IOException {

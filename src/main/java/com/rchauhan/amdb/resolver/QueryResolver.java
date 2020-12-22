@@ -3,15 +3,20 @@ package com.rchauhan.amdb.resolver;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.rchauhan.amdb.model.*;
 import com.rchauhan.amdb.services.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Component
 public class QueryResolver implements GraphQLQueryResolver {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(QueryResolver.class);
 
     @Autowired
     AwardService awardService;
@@ -52,9 +57,12 @@ public class QueryResolver implements GraphQLQueryResolver {
         return personService.getPerson(id);
     }
 
-    public Optional<Person> getPersonByUrlID(String urlID) { return personService.getPersonByUrlID(urlID); }
+    public Optional<Person> getPersonByUrlID(String urlID) {
+        return personService.getPersonByUrlID(urlID);
+    }
 
-    public Optional<Person> getPersonByNameAndDateOfBirth(String name, String dateOfBirth) {
+    public Optional<Person> getPersonByNameAndDateOfBirth(String name, Date dateOfBirth) {
+        LOGGER.info("Getting person by name: {} and dOB: {}", name, dateOfBirth);
         return personService.getPersonByNameAndDateOfBirth(name, dateOfBirth);
     }
 

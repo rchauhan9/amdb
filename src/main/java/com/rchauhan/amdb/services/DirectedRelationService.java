@@ -10,6 +10,7 @@ import com.rchauhan.amdb.repositories.DirectedRelationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class DirectedRelationService {
     @Autowired
     TitleService titleService;
 
-    public DirectedRelation createDirectedRelation(String personName, String personDOB, String titleName, Integer titleReleased) {
+    public DirectedRelation createDirectedRelation(String personName, Date personDOB, String titleName, Integer titleReleased) {
 
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {

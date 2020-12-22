@@ -5,6 +5,7 @@ import com.graphql.spring.boot.test.GraphQLTest;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import com.rchauhan.amdb.model.*;
 import com.rchauhan.amdb.services.*;
+import com.rchauhan.amdb.utils.DateUtil;
 import com.rchauhan.amdb.utils.URLGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,9 +14,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -68,14 +73,14 @@ public class MutationResolverTest {
 
     /* PERSON VARS */
     private String nameBale = "Christian Bale";
-    private String dOBBale = "30-Jan-1974";
+    private Date dOBBale = DateUtil.createDate("dd-MMM-yyyy", "30-Jan-1974");
     private String bioBale = "Most famous for his role as Bruce Wayne in the Dark Knight trilogy...";
-    private Person christianBale = Person.createPerson(nameBale, dOBBale, bioBale, mockUrlID);
+    private Person christianBale = new Person(nameBale, dOBBale, bioBale, mockUrlID);
 
     private String nameNolan = "Christopher Nolan";
-    private String dOBNolan = "30-Jul-1970";
+    private Date dOBNolan = DateUtil.createDate("dd-MMM-yyyy HH", "30-Jul-1970 01");
     private String bioNolan = "One of the most acclaimed directors of our time, Nolan is responsible for...";
-    private Person chrisNolan = Person.createPerson(nameNolan, dOBNolan, bioNolan, mockUrlID);
+    private Person chrisNolan = new Person(nameNolan, dOBNolan, bioNolan, mockUrlID);
 
     /* TITLE VARS  */
     private String titleName = "The Dark Knight";

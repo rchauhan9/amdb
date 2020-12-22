@@ -10,6 +10,7 @@ import com.rchauhan.amdb.repositories.WonRelationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class WonRelationService {
     AwardService awardService;
 
 
-    public WonRelation createWonRelation(String personName, String personDOB, String awardName, String awardOrganisation, Integer wonYear, String titleName, Integer titleReleased) {
+    public WonRelation createWonRelation(String personName, Date personDOB, String awardName, String awardOrganisation, Integer wonYear, String titleName, Integer titleReleased) {
 
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {

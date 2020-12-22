@@ -7,6 +7,7 @@ import com.rchauhan.amdb.model.ActedInRelation;
 import com.rchauhan.amdb.model.Person;
 import com.rchauhan.amdb.model.Title;
 import com.rchauhan.amdb.repositories.ActedInRelationRepository;
+import com.rchauhan.amdb.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -37,7 +38,7 @@ public class ActedInRelationServiceTest {
     private UUID personID = UUID.randomUUID();
     private UUID titleID = UUID.randomUUID();
     private String personName = "Christian Bale";
-    private String personDOB = "01-Jan-1974";
+    private Date personDOB = DateUtil.createDate("dd-MMM-yyyy", "01-Jan-1974");
     private String titleName = "The Dark Knight";
     private Integer titleReleased = 2008;
     private List<String> characters = Arrays.asList("Bruce Wayne", "Batman");

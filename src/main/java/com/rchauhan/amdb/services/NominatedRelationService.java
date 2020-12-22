@@ -10,6 +10,7 @@ import com.rchauhan.amdb.repositories.NominatedRelationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,7 +26,7 @@ public class NominatedRelationService {
     @Autowired
     AwardService awardService;
 
-    public NominatedRelation createNominatedRelation(String personName, String personDOB, String awardName, String awardOrganisation, Integer nominationYear, String titleName, Integer titleReleased) {
+    public NominatedRelation createNominatedRelation(String personName, Date personDOB, String awardName, String awardOrganisation, Integer nominationYear, String titleName, Integer titleReleased) {
         Optional<Person> person = personService.getPersonByNameAndDateOfBirth(personName, personDOB);
         if (person.isEmpty()) {
             throw new PersonDoesNotExistException(String.format("Cannot create NOMINATED relation between Person %s and Award %s. Person does not exist.", personName, awardName));

@@ -1,21 +1,20 @@
 package com.rchauhan.amdb.services;
 
-import com.rchauhan.amdb.exceptions.*;
-import com.rchauhan.amdb.model.DirectedRelation;
+import com.rchauhan.amdb.exceptions.PersonDoesNotExistException;
+import com.rchauhan.amdb.exceptions.TitleDoesNotExistException;
+import com.rchauhan.amdb.exceptions.WroteRelationExistsException;
 import com.rchauhan.amdb.model.Person;
 import com.rchauhan.amdb.model.Title;
 import com.rchauhan.amdb.model.WroteRelation;
 import com.rchauhan.amdb.repositories.WroteRelationRepository;
+import com.rchauhan.amdb.utils.DateUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -39,7 +38,7 @@ public class WroteRelationServiceTest {
     private UUID personID = UUID.randomUUID();
     private UUID titleID = UUID.randomUUID();
     private String personName = "Christopher Nolan";
-    private String personDOB = "30-Jan-1970";
+    private Date personDOB = DateUtil.createDate("dd-MMM-yyyy", "30-Jan-1970");
     private String titleName = "The Dark Knight";
     private Integer titleReleased = 2008;
     private List<String> items = Arrays.asList("Screenplay", "Story");

@@ -1,10 +1,10 @@
 mutation {
   createWroteRelation(
-  personName:"Christopher Nolan",
-  personDOB:"30-Jul-1970",
-  titleName:"The Dark Knight",
-  titleReleased:2008,
-  items: ["Screenplay", "Story"]) {
+      personName:"Christopher Nolan",
+      personDOB:"1970-07-30",
+      titleName:"The Dark Knight",
+      titleReleased:2008,
+      items: ["Screenplay", "Story"]) {
     person {
       name
     }

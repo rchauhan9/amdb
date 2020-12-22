@@ -10,8 +10,6 @@ import org.neo4j.ogm.annotation.typeconversion.DateString;
 import org.neo4j.ogm.id.UuidStrategy;
 import org.neo4j.ogm.typeconversion.UuidStringConverter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @NodeEntity
@@ -131,14 +129,4 @@ public class Person implements Searchable {
         return Objects.hash(id);
     }
 
-    public static Person createPerson(String name, String dOB, String bio, String urlID) {
-        SimpleDateFormat sdf = new SimpleDateFormat(Constants.PERSON_DOB_FORMAT);
-        Date dateOfBirth = new Date();
-        try {
-            dateOfBirth = sdf.parse(dOB);
-        } catch (ParseException e) {
-            System.out.println("Could not parse date of birth");
-        }
-        return new Person(name, dateOfBirth, bio, urlID);
-    }
 }
