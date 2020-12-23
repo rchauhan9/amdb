@@ -21,6 +21,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
@@ -78,7 +80,7 @@ public class MutationResolverTest {
     private Person christianBale = new Person(nameBale, dOBBale, bioBale, mockUrlID);
 
     private String nameNolan = "Christopher Nolan";
-    private Date dOBNolan = DateUtil.createDate("dd-MMM-yyyy HH", "30-Jul-1970 01");
+    private Date dOBNolan = DateUtil.createDate("dd-MMM-yyyy", "30-Jul-1970");
     private String bioNolan = "One of the most acclaimed directors of our time, Nolan is responsible for...";
     private Person chrisNolan = new Person(nameNolan, dOBNolan, bioNolan, mockUrlID);
 
@@ -159,7 +161,7 @@ public class MutationResolverTest {
 
     @Test
     public void createDirectedRelationTest() throws IOException {
-        when(directedRelationService.createDirectedRelation(nameNolan, dOBNolan, titleName, titleReleased))
+        when(directedRelationService.createDirectedRelation(eq(nameNolan), any(Date.class), eq(titleName), eq(titleReleased)))
                 .thenReturn(directedRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createDirectedRelation.graphql");
         assertTrue(response.isOk());
@@ -214,7 +216,7 @@ public class MutationResolverTest {
 
     @Test
     public void createProducedRelationTest() throws IOException {
-        when(producedRelationService.createProducedRelation(nameNolan, dOBNolan, titleName, titleReleased, producedItems))
+        when(producedRelationService.createProducedRelation(eq(nameNolan), any(Date.class), eq(titleName), eq(titleReleased), eq(producedItems)))
                 .thenReturn(producedRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createProducedRelation.graphql");
         assertTrue(response.isOk());
@@ -255,7 +257,7 @@ public class MutationResolverTest {
 
     @Test
     public void createWroteRelationTest() throws IOException {
-        when(wroteRelationService.createWroteRelation(nameNolan, dOBNolan, titleName, titleReleased, wroteItems))
+        when(wroteRelationService.createWroteRelation(eq(nameNolan), any(Date.class), eq(titleName), eq(titleReleased), eq(wroteItems)))
                 .thenReturn(wroteRelation);
         GraphQLResponse response = graphQLTestTemplate.postForResource("graphql/createWroteRelation.graphql");
         assertTrue(response.isOk());
