@@ -34,30 +34,37 @@ public class QueryResolver implements GraphQLQueryResolver {
     SearchableService searchableService;
 
     public Optional<Award> getAward(UUID id) {
+        LOGGER.info("Getting award by id: {}", id);
         return awardService.getAward(id);
     }
 
     public Optional<Award> getAwardByNameAndOrganisation(String name, String organisation) {
+        LOGGER.info("Getting award by name: {} and organisation: {}", name, organisation);
         return awardService.getAwardByNameAndOrganisation(name, organisation);
     }
 
     public Optional<Genre> getGenre(UUID id) {
+        LOGGER.info("Getting genre by id: {}", id);
         return genreService.getGenre(id);
     }
 
     public Optional<Genre> getGenreByUrlID(String urlID) {
+        LOGGER.info("Getting genre by urlID: {}", urlID);
         return genreService.getGenreByUrlID(urlID);
     }
 
     public Optional<Genre> getGenreByName(String name) {
+        LOGGER.info("Getting genre by name: {}", name);
         return genreService.getGenreByName(name);
     }
 
     public Optional<Person> getPerson(UUID id) {
+        LOGGER.info("Getting person by id: {}", id);
         return personService.getPerson(id);
     }
 
     public Optional<Person> getPersonByUrlID(String urlID) {
+        LOGGER.info("Getting person by urlID: {}", urlID);
         return personService.getPersonByUrlID(urlID);
     }
 
@@ -67,22 +74,27 @@ public class QueryResolver implements GraphQLQueryResolver {
     }
 
     public Optional<Title> getTitle(UUID id) {
+        LOGGER.info("Getting title by id: {}", id);
         return titleService.getTitle(id);
     }
 
     public Optional<Title> getTitleByUrlID(String urlID) {
+        LOGGER.info("Getting title by urlID: {}", urlID);
         return titleService.getTitleByUrlID(urlID);
     }
 
     public Optional<Title> getTitleByNameAndReleased(String name, Integer released) {
+        LOGGER.info("Getting title by name: {} and release year: {}", name, released);
         return titleService.getTitleByNameAndReleased(name, released);
     }
 
     public List<Searchable> getSearchableByName(String name) {
+        LOGGER.info("Getting searchables by query: {}", name);
         return searchableService.getSearchableByName(name);
     }
 
     public String healthcheck(String info) {
+        LOGGER.info("Healthcheck: {}", info);
         return "Healthcheck: " + info;
     }
 
