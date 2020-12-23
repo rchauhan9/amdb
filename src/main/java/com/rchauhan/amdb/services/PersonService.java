@@ -7,6 +7,7 @@ import com.rchauhan.amdb.utils.URLGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,7 +35,8 @@ public class PersonService {
 
     public Person createPerson(String name, Date dateOfBirth, String bio) throws PersonExistsException {
         if (personExists(name, dateOfBirth)) {
-            throw new PersonExistsException(String.format("A person with name %s and date of birth %s already exists.", name, dateOfBirth));
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
+            throw new PersonExistsException(String.format("A person with name %s and date of birth %s already exists.", name, formatter.format(dateOfBirth)));
         }
 
         return personRepository.save(new Person(name, dateOfBirth, bio, urlGenerator.createURLString()));

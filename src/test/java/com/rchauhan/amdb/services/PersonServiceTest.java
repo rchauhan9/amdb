@@ -65,7 +65,7 @@ public class PersonServiceTest {
             personService.createPerson(name, dateOfBirth, bio);
         });
 
-        String expectedMessage = "A person with name Leonardo DiCaprio and date of birth Mon Nov 11 00:00:00 GMT 1974 already exists.";
+        String expectedMessage = "A person with name Leonardo DiCaprio and date of birth 11-Nov-1974 already exists.";
         assertEquals(expectedMessage, exception.getMessage());
 
     }
