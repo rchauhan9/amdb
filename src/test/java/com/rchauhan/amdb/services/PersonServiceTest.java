@@ -35,7 +35,6 @@ public class PersonServiceTest {
     private UUID id = UUID.randomUUID();
     private String name = "Leonardo DiCaprio";
     private Date dateOfBirth = DateUtil.createDate("dd-MMM-yyyy", "11-Nov-1974");
-    private String bio = "From teenage heartthrob to leading actor, Leonardo DiCaprio has...";
     private String urlID = "4bCd3F6h1Jk";
 
     @Test
@@ -59,10 +58,10 @@ public class PersonServiceTest {
     @Test
     public void createPersonWhenPersonExistsTest() throws ParseException {
         when(personRepository.findPersonByNameAndDateOfBirth(name, dateOfBirth))
-                .thenReturn(Optional.of(new Person(name, dateOfBirth, bio, urlID)));
+                .thenReturn(Optional.of(new Person(name, dateOfBirth, urlID)));
 
         Exception exception = assertThrows(PersonExistsException.class, () -> {
-            personService.createPerson(name, dateOfBirth, bio);
+            personService.createPerson(name, dateOfBirth);
         });
 
         String expectedMessage = "A person with name Leonardo DiCaprio and date of birth 11-Nov-1974 already exists.";
@@ -72,13 +71,13 @@ public class PersonServiceTest {
 
     @Test
     public void createPersonWhenDoesNotExist() {
-        Person leo = new Person(name, dateOfBirth, bio, urlID);
+        Person leo = new Person(name, dateOfBirth, urlID);
 
         when(personRepository.findPersonByNameAndDateOfBirth(name, dateOfBirth)).thenReturn(Optional.empty());
         when(urlGenerator.createURLString()).thenReturn(urlID);
         when(personRepository.save(leo)).thenReturn(leo);
 
-        Person person = personService.createPerson(name, dateOfBirth, bio);
+        Person person = personService.createPerson(name, dateOfBirth);
         assertEquals(name, person.getName());
         assertEquals(dateOfBirth, person.getDateOfBirth());
         assertEquals(urlID, person.getUrlID());
@@ -95,7 +94,7 @@ public class PersonServiceTest {
     @Test
     public void personExistsIDFoundTest() {
         when(personRepository.findById(id))
-                .thenReturn(Optional.of(new Person(name, dateOfBirth, bio, urlID)));
+                .thenReturn(Optional.of(new Person(name, dateOfBirth, urlID)));
 
         assertTrue(personService.personExists(id));
     }
@@ -111,7 +110,7 @@ public class PersonServiceTest {
     @Test
     public void personExistsNameAndDateOfBirthFoundTest() {
         when(personRepository.findPersonByNameAndDateOfBirth(name, dateOfBirth))
-                .thenReturn(Optional.of(new Person(name, dateOfBirth, bio, urlID)));
+                .thenReturn(Optional.of(new Person(name, dateOfBirth, urlID)));
         assertTrue(personService.personExists(name, dateOfBirth));
     }
 

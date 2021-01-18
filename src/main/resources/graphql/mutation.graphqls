@@ -1,6 +1,6 @@
 type Mutation {
     createTitle(name: String, summary: String, released: Int, certificateRating: String, titleLengthInMins: Int, storyline: String, tagline: String): Title
-    createPerson(name: String, dateOfBirth: String, bio: String): Person
+    createPerson(name: String, dateOfBirth: String): Person
     createGenre(name: String): Genre
     createAward(name: String, organisation: String): Award
 

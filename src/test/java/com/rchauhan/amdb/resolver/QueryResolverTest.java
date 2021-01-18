@@ -82,8 +82,7 @@ public class QueryResolverTest {
     /* PERSON VARS */
     private String nameBale = "Christian Bale";
     private Date dOBBale = DateUtil.createDate("dd-MMM-yyyy", "30-Jan-1974");
-    private String bioBale = "Most famous for his role as Bruce Wayne in the Dark Knight trilogy...";
-    private Person christianBale = new Person(nameBale, dOBBale, bioBale, mockUrlID);
+    private Person christianBale = new Person(nameBale, dOBBale, mockUrlID);
 
     /* TITLE VARS  */
     private String titleName = "The Dark Knight";
@@ -106,7 +105,7 @@ public class QueryResolverTest {
     private String bjmUrlID = "6SNW-eo67E8";
 
     private Title beingJM = new Title(bjmName, bjmSummary, bjmReleased, bjmCertificateRating, bjmTitleLengthInMins, bjmStoryline, bjmTagline, bjmUrlID);
-    private Person johnMalkovich = new Person("John Malkovich", DateUtil.createDate("dd-MMM-yyyy", "09-Sep-1953"), "Famous for playing himself in the title role...", "1a2B3c4D5e-");
+    private Person johnMalkovich = new Person("John Malkovich", DateUtil.createDate("dd-MMM-yyyy", "09-Sep-1953"), "1a2B3c4D5e-");
 
     @Test
     public void getAwardByIDTest() throws IOException {
@@ -157,7 +156,6 @@ public class QueryResolverTest {
         assertEquals(christianBale.getName(), response.get("$.data.person.name", String.class));
         assertEquals(christianBale.getDateOfBirth().toString(), response.get("$.data.person.dateOfBirth", String.class));
         assertEquals(christianBale.getDateOfBirth().toString(), response.get("$.data.person.dateOfBirth", String.class));
-        assertEquals(christianBale.getBio(), response.get("$.data.person.bio", String.class));
     }
 
     @Test
@@ -167,7 +165,6 @@ public class QueryResolverTest {
         assert(response.isOk());
         assertEquals(christianBale.getName(), response.get("$.data.personByUrlID.name", String.class));
         assertEquals(christianBale.getDateOfBirth().toString(), response.get("$.data.personByUrlID.dateOfBirth", String.class));
-        assertEquals(christianBale.getBio(), response.get("$.data.personByUrlID.bio", String.class));
     }
 
     @Test
@@ -177,7 +174,6 @@ public class QueryResolverTest {
         assert(response.isOk());
         assertEquals(christianBale.getName(), response.get("$.data.personByNameAndDateOfBirth.name", String.class));
         assertEquals(christianBale.getDateOfBirth().toString(), response.get("$.data.personByNameAndDateOfBirth.dateOfBirth", String.class));
-        assertEquals(christianBale.getBio(), response.get("$.data.personByNameAndDateOfBirth.bio", String.class));
     }
 
     @Test

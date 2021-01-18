@@ -1,0 +1,1 @@
+CALL db.index.fulltext.createNodeIndex('names',['Person', 'Title'], ['name'])

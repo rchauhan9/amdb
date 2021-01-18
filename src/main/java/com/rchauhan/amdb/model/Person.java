@@ -25,8 +25,6 @@ public class Person implements Searchable {
     @DateString(Constants.PERSON_DOB_FORMAT)
     private Date dateOfBirth;
 
-    private String bio;
-
     private String urlID;
 
     @Relationship(type = "ACTED_IN")
@@ -54,10 +52,9 @@ public class Person implements Searchable {
         this.id = id;
     }
 
-    public Person(String name, Date dateOfBirth, String bio, String urlID) {
+    public Person(String name, Date dateOfBirth, String urlID) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
-        this.bio = bio;
         this.urlID = urlID;
     }
 
@@ -71,10 +68,6 @@ public class Person implements Searchable {
 
     public Date getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public String getBio() {
-        return bio;
     }
 
     public String getUrlID() {
@@ -111,7 +104,6 @@ public class Person implements Searchable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", bio='" + bio + '\'' +
                 ", urlID='" + urlID + '\'' +
                 '}';
     }

@@ -2,6 +2,5 @@ query {
     personByNameAndDateOfBirth(name:"Christian Bale", dateOfBirth:"1974-01-30") {
         name
         dateOfBirth
-        bio
     }
 }
